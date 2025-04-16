@@ -93,16 +93,10 @@ export interface PaginatedNewsList {
     'count': number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof PaginatedNewsList
      */
-    'next'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaginatedNewsList
-     */
-    'previous'?: string | null;
+    'page_size': number;
     /**
      * 
      * @type {Array<News>}
