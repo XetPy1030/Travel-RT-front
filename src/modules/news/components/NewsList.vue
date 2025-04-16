@@ -28,8 +28,13 @@ defineProps<{
 
 <style scoped>
 .news-list__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+}
+
+.news-list {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 </style>

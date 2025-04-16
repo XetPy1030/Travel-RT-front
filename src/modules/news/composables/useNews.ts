@@ -7,6 +7,7 @@ export const useNews = () => {
     const news = ref<PaginatedNewsList>({
         count: 0,
         results: [],
+        page_size: 10,
         next: null,
         previous: null
     })
@@ -39,7 +40,7 @@ export const useNews = () => {
     }
 
     const featuredNews = computed(() => news.value.results.slice(0, 3))
-    const totalPages = computed(() => Math.ceil(news.value.count / (news.value.results.length || 1)))
+    const totalPages = computed(() => Math.ceil(news.value.count / (news.value.page_size)))
 
     return {
         news: computed(() => news.value.results),

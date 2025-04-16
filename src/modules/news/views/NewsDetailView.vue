@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { useNewsStore } from '@/stores/useNewsStores'
 import { onMounted, computed } from 'vue'
 import { processHtmlContent } from '@/utils/htmlUtils'
-
+import { formatDateRu } from '@/utils/date'
 const route = useRoute()
 const newsStore = useNewsStore()
 
@@ -27,7 +27,7 @@ const processedContent = computed(() => {
     </div>
     <div v-else class="news-detail__content">
       <h1 class="news-detail__title">{{ newsStore.currentNews.title }}</h1>
-      <div class="news-detail__date">{{ newsStore.currentNews.created_at }}</div>
+      <div class="news-detail__date">{{ formatDateRu(newsStore.currentNews.created_at).fullDate }}, {{ formatDateRu(newsStore.currentNews.created_at).weekday }}</div>
       <div class="news-detail__image" v-if="newsStore.currentNews.image">
         <img :src="newsStore.currentNews.image" :alt="newsStore.currentNews.title">
       </div>
@@ -74,6 +74,10 @@ const processedContent = computed(() => {
   line-height: 1.6;
   color: #444;
   margin-bottom: 2rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .news-detail__content {
@@ -88,7 +92,7 @@ const processedContent = computed(() => {
 .news-detail__content :deep(h4),
 .news-detail__content :deep(h5),
 .news-detail__content :deep(h6) {
-  margin: 1.5em 0 0.5em;
+  margin: 0 0 0.5em;
   color: #333;
   font-weight: 600;
 }

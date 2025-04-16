@@ -99,6 +99,18 @@ export interface PaginatedNewsList {
     'page_size': number;
     /**
      * 
+     * @type {string}
+     * @memberof PaginatedNewsList
+     */
+    'next'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedNewsList
+     */
+    'previous'?: string | null;
+    /**
+     * 
      * @type {Array<News>}
      * @memberof PaginatedNewsList
      */
