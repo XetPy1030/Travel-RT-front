@@ -5,17 +5,21 @@ import { useNews } from '@/modules/news/composables/useNews'
 export const useNewsStore = defineStore('news', () => {
     const {
         news,
+        currentNews,
         featuredNews,
         loading,
         error,
-        fetchNews
+        fetchNews,
+        fetchNewsById
     } = useNews()
 
     return {
         news,
+        currentNews,
         featuredNews,
         loading,
         error,
-        fetchNews
+        fetchNews,
+        fetchNewsById
     }
 })

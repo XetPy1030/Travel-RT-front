@@ -1,17 +1,23 @@
 // modules/news/composables/useNews.ts
 import { ref, computed } from 'vue'
 import { $api } from '@/api'
-import type { NewsItem } from './types/news'
+import type { PaginatedNewsList, News } from "@/api/generated";
 
 export const useNews = () => {
-    const news = ref<NewsItem[]>([])
+    const news = ref<PaginatedNewsList>({
+        count: 0,
+        results: [],
+        next: null,
+        previous: null
+    })
+    const currentNews = ref<News | null>(null)
     const loading = ref(false)
     const error = ref<Error | null>(null)
 
-    const fetchNews = async (limit?: number) => {
+    const fetchNews = async (pageSize?: number, page?: number) => {
         try {
             loading.value = true
-            const response = await $api.api.apiNewsList({pageSize: limit})
+            const response = await $api.api.apiNewsList({ pageSize, page })
             news.value = response.data
         } catch (err) {
             error.value = err as Error
@@ -20,13 +26,31 @@ export const useNews = () => {
         }
     }
 
-    const featuredNews = computed(() => news.value.slice(0, 3))
+    const fetchNewsById = async (id: number) => {
+        try {
+            loading.value = true
+            const response = await $api.api.apiNewsRetrieve({ id })
+            currentNews.value = response.data
+        } catch (err) {
+            error.value = err as Error
+        } finally {
+            loading.value = false
+        }
+    }
+
+    const featuredNews = computed(() => news.value.results.slice(0, 3))
+    const totalPages = computed(() => Math.ceil(news.value.count / (news.value.results.length || 1)))
 
     return {
-        news,
+        news: computed(() => news.value.results),
+        currentNews,
         featuredNews,
         loading,
         error,
-        fetchNews
+        fetchNews,
+        fetchNewsById,
+        totalPages,
+        hasNextPage: computed(() => !!news.value.next),
+        hasPreviousPage: computed(() => !!news.value.previous)
     }
 }

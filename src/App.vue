@@ -1,30 +1,93 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+    <div class="layout-wrapper">
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <RouterLink to="/" class="logo-link">
+              <i class="pi pi-compass" style="font-size: 2rem"></i>
+              <span class="logo-text">TravelRT</span>
+            </RouterLink>
+          </div>
+          <nav class="nav">
+            <RouterLink to="/" class="nav-link">
+              <i class="pi pi-home"></i>
+              <span>Главная</span>
+            </RouterLink>
+            <RouterLink to="/news" class="nav-link">
+              <i class="pi pi-book"></i>
+              <span>Новости</span>
+            </RouterLink>
+          </nav>
+        </div>
+      </header>
+      <main class="main-content">
+        <RouterView />
+      </main>
+    </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.layout-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.header {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  gap: 0.5rem;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 </style>
