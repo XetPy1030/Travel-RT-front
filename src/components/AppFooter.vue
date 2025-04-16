@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">
-        <h3 class="footer-title">TravelRT</h3>
+        <h3 class="footer-title">Путешествуем РТ</h3>
         <p class="footer-text">Ваш путеводитель по республике Татарстан</p>
       </div>
       <div class="footer-section">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="copyright">© 2024 TravelRT. Все права защищены.</p>
+      <p class="copyright">© 2024 Путешествуем РТ. Все права защищены.</p>
     </div>
   </footer>
 </template>

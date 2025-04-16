@@ -4,7 +4,7 @@
       <div class="logo">
         <RouterLink to="/" class="logo-link">
           <i class="pi pi-compass" style="font-size: 2rem"></i>
-          <span class="logo-text">TravelRT</span>
+          <span class="logo-text">ТатарТур</span>
         </RouterLink>
       </div>
       <nav class="nav">
