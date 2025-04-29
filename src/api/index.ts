@@ -1,8 +1,9 @@
 import { Configuration, ApiApi } from './generated'
 import axios from "axios";
+import { API_BASE_URL } from '@/config'
 
 const config = new Configuration({
-    basePath: import.meta.env.VITE_API_BASE_URL,
+    basePath: API_BASE_URL,
 })
 
 export const $api = {

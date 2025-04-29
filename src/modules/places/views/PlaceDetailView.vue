@@ -64,13 +64,14 @@ import Galleria from 'primevue/galleria'
 import Tag from 'primevue/tag'
 import ProgressSpinner from 'primevue/progressspinner'
 import { processHtmlContent } from '@/utils/htmlUtils'
+import { API_BASE_URL } from '@/config'
 
 const route = useRoute()
 const { currentPlace, loading, error, fetchPlaceById } = usePlaces()
 
 const processedDescription = computed(() => {
   if (!currentPlace.value?.full_description) return ''
-  return processHtmlContent(currentPlace.value.full_description, import.meta.env.VITE_API_BASE_URL)
+  return processHtmlContent(currentPlace.value.full_description, API_BASE_URL)
 })
 
 const formatDate = (dateString: string) => {
