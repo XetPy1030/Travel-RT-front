@@ -12,7 +12,7 @@
       <div class="gallery">
         <Galleria 
           :value="currentPlace.images" 
-          :numVisible="3" 
+          :numVisible="5"
           :circular="true" 
           :autoPlay="true" 
           :transitionInterval="3000"
