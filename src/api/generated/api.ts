@@ -107,6 +107,43 @@ export interface News {
 /**
  * 
  * @export
+ * @interface PaginatedDistrictList
+ */
+export interface PaginatedDistrictList {
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedDistrictList
+     */
+    'count': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedDistrictList
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedDistrictList
+     */
+    'next'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedDistrictList
+     */
+    'previous'?: string | null;
+    /**
+     * 
+     * @type {Array<District>}
+     * @memberof PaginatedDistrictList
+     */
+    'results': Array<District>;
+}
+/**
+ * 
+ * @export
  * @interface PaginatedNewsList
  */
 export interface PaginatedNewsList {
@@ -140,6 +177,43 @@ export interface PaginatedNewsList {
      * @memberof PaginatedNewsList
      */
     'results': Array<News>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedSettlementList
+ */
+export interface PaginatedSettlementList {
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedSettlementList
+     */
+    'count': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedSettlementList
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedSettlementList
+     */
+    'next'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedSettlementList
+     */
+    'previous'?: string | null;
+    /**
+     * 
+     * @type {Array<Settlement>}
+     * @memberof PaginatedSettlementList
+     */
+    'results': Array<Settlement>;
 }
 /**
  * 
@@ -357,16 +431,28 @@ export interface Settlement {
     'name': string;
     /**
      * 
+     * @type {number}
+     * @memberof Settlement
+     */
+    'district'?: number | null;
+    /**
+     * 
      * @type {TypeEnum}
      * @memberof Settlement
      */
     'type'?: TypeEnum;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Settlement
      */
-    'district'?: number | null;
+    'type_display': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Settlement
+     */
+    'is_city_district': string;
 }
 
 
@@ -816,10 +902,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * API endpoint для чтения данных о районах
+         * @param {string} [name] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsDistrictsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiLocationsDistrictsList: async (name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/locations/districts/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -836,6 +927,26 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (ordering !== undefined) {
+                localVarQueryParameter['ordering'] = ordering;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -849,7 +960,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * API endpoint для чтения данных о районах
-         * @param {number} id 
+         * @param {number} id A unique integer value identifying this Район.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -886,10 +997,17 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * API endpoint для чтения данных о населенных пунктах
+         * @param {number} [district] 
+         * @param {string} [name] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {ApiLocationsSettlementsListTypeEnum} [type] * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsSettlementsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiLocationsSettlementsList: async (district?: number, name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, type?: ApiLocationsSettlementsListTypeEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/locations/settlements/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -906,6 +1024,34 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (district !== undefined) {
+                localVarQueryParameter['district'] = district;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (ordering !== undefined) {
+                localVarQueryParameter['ordering'] = ordering;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -919,7 +1065,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * API endpoint для чтения данных о населенных пунктах
-         * @param {number} id 
+         * @param {number} id A unique integer value identifying this Населённый пункт.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1241,18 +1387,23 @@ export const ApiApiFp = function(configuration?: Configuration) {
         },
         /**
          * API endpoint для чтения данных о районах
+         * @param {string} [name] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiLocationsDistrictsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<District>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsDistrictsList(options);
+        async apiLocationsDistrictsList(name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedDistrictList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsDistrictsList(name, ordering, page, pageSize, search, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.apiLocationsDistrictsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * API endpoint для чтения данных о районах
-         * @param {number} id 
+         * @param {number} id A unique integer value identifying this Район.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1264,18 +1415,25 @@ export const ApiApiFp = function(configuration?: Configuration) {
         },
         /**
          * API endpoint для чтения данных о населенных пунктах
+         * @param {number} [district] 
+         * @param {string} [name] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {ApiLocationsSettlementsListTypeEnum} [type] * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiLocationsSettlementsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Settlement>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsSettlementsList(options);
+        async apiLocationsSettlementsList(district?: number, name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, type?: ApiLocationsSettlementsListTypeEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedSettlementList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsSettlementsList(district, name, ordering, page, pageSize, search, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.apiLocationsSettlementsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * API endpoint для чтения данных о населенных пунктах
-         * @param {number} id 
+         * @param {number} id A unique integer value identifying this Населённый пункт.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1422,11 +1580,12 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         },
         /**
          * API endpoint для чтения данных о районах
+         * @param {ApiApiApiLocationsDistrictsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsDistrictsList(options?: RawAxiosRequestConfig): AxiosPromise<Array<District>> {
-            return localVarFp.apiLocationsDistrictsList(options).then((request) => request(axios, basePath));
+        apiLocationsDistrictsList(requestParameters: ApiApiApiLocationsDistrictsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedDistrictList> {
+            return localVarFp.apiLocationsDistrictsList(requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(axios, basePath));
         },
         /**
          * API endpoint для чтения данных о районах
@@ -1439,11 +1598,12 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         },
         /**
          * API endpoint для чтения данных о населенных пунктах
+         * @param {ApiApiApiLocationsSettlementsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsSettlementsList(options?: RawAxiosRequestConfig): AxiosPromise<Array<Settlement>> {
-            return localVarFp.apiLocationsSettlementsList(options).then((request) => request(axios, basePath));
+        apiLocationsSettlementsList(requestParameters: ApiApiApiLocationsSettlementsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedSettlementList> {
+            return localVarFp.apiLocationsSettlementsList(requestParameters.district, requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * API endpoint для чтения данных о населенных пунктах
@@ -1572,11 +1732,12 @@ export interface ApiApiInterface {
 
     /**
      * API endpoint для чтения данных о районах
+     * @param {ApiApiApiLocationsDistrictsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApiInterface
      */
-    apiLocationsDistrictsList(options?: RawAxiosRequestConfig): AxiosPromise<Array<District>>;
+    apiLocationsDistrictsList(requestParameters?: ApiApiApiLocationsDistrictsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedDistrictList>;
 
     /**
      * API endpoint для чтения данных о районах
@@ -1589,11 +1750,12 @@ export interface ApiApiInterface {
 
     /**
      * API endpoint для чтения данных о населенных пунктах
+     * @param {ApiApiApiLocationsSettlementsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApiInterface
      */
-    apiLocationsSettlementsList(options?: RawAxiosRequestConfig): AxiosPromise<Array<Settlement>>;
+    apiLocationsSettlementsList(requestParameters?: ApiApiApiLocationsSettlementsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedSettlementList>;
 
     /**
      * API endpoint для чтения данных о населенных пунктах
@@ -1741,17 +1903,115 @@ export interface ApiApiApiAccountsTokenVerifyCreateRequest {
 }
 
 /**
+ * Request parameters for apiLocationsDistrictsList operation in ApiApi.
+ * @export
+ * @interface ApiApiApiLocationsDistrictsListRequest
+ */
+export interface ApiApiApiLocationsDistrictsListRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiApiApiLocationsDistrictsList
+     */
+    readonly name?: string
+
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof ApiApiApiLocationsDistrictsList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof ApiApiApiLocationsDistrictsList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof ApiApiApiLocationsDistrictsList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof ApiApiApiLocationsDistrictsList
+     */
+    readonly search?: string
+}
+
+/**
  * Request parameters for apiLocationsDistrictsRetrieve operation in ApiApi.
  * @export
  * @interface ApiApiApiLocationsDistrictsRetrieveRequest
  */
 export interface ApiApiApiLocationsDistrictsRetrieveRequest {
     /**
-     * 
+     * A unique integer value identifying this Район.
      * @type {number}
      * @memberof ApiApiApiLocationsDistrictsRetrieve
      */
     readonly id: number
+}
+
+/**
+ * Request parameters for apiLocationsSettlementsList operation in ApiApi.
+ * @export
+ * @interface ApiApiApiLocationsSettlementsListRequest
+ */
+export interface ApiApiApiLocationsSettlementsListRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly district?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly name?: string
+
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly search?: string
+
+    /**
+     * * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
+     * @type {'city' | 'town' | 'village' | 'village_hamlet'}
+     * @memberof ApiApiApiLocationsSettlementsList
+     */
+    readonly type?: ApiLocationsSettlementsListTypeEnum
 }
 
 /**
@@ -1761,7 +2021,7 @@ export interface ApiApiApiLocationsDistrictsRetrieveRequest {
  */
 export interface ApiApiApiLocationsSettlementsRetrieveRequest {
     /**
-     * 
+     * A unique integer value identifying this Населённый пункт.
      * @type {number}
      * @memberof ApiApiApiLocationsSettlementsRetrieve
      */
@@ -1962,12 +2222,13 @@ export class ApiApi extends BaseAPI implements ApiApiInterface {
 
     /**
      * API endpoint для чтения данных о районах
+     * @param {ApiApiApiLocationsDistrictsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public apiLocationsDistrictsList(options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiLocationsDistrictsList(options).then((request) => request(this.axios, this.basePath));
+    public apiLocationsDistrictsList(requestParameters: ApiApiApiLocationsDistrictsListRequest = {}, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).apiLocationsDistrictsList(requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1983,12 +2244,13 @@ export class ApiApi extends BaseAPI implements ApiApiInterface {
 
     /**
      * API endpoint для чтения данных о населенных пунктах
+     * @param {ApiApiApiLocationsSettlementsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public apiLocationsSettlementsList(options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiLocationsSettlementsList(options).then((request) => request(this.axios, this.basePath));
+    public apiLocationsSettlementsList(requestParameters: ApiApiApiLocationsSettlementsListRequest = {}, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).apiLocationsSettlementsList(requestParameters.district, requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2047,5 +2309,15 @@ export class ApiApi extends BaseAPI implements ApiApiInterface {
     }
 }
 
+/**
+ * @export
+ */
+export const ApiLocationsSettlementsListTypeEnum = {
+    City: 'city',
+    Town: 'town',
+    Village: 'village',
+    VillageHamlet: 'village_hamlet'
+} as const;
+export type ApiLocationsSettlementsListTypeEnum = typeof ApiLocationsSettlementsListTypeEnum[keyof typeof ApiLocationsSettlementsListTypeEnum];
 
 
