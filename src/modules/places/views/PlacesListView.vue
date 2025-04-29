@@ -15,11 +15,16 @@
       {{ error.message }}
     </div>
 
+    <div v-else-if="!places.length" class="empty-state">
+      <i class="pi pi-map-marker" style="font-size: 3rem; color: var(--surface-500)"></i>
+      <p>Места не найдены</p>
+    </div>
+
     <div v-else class="places-grid">
       <PlaceCard v-for="place in places" :key="place.id" :place="place" />
     </div>
 
-    <div class="pagination">
+    <div v-if="!loading && !error && places.length" class="pagination">
       <Button 
         icon="pi pi-chevron-left" 
         :disabled="!hasPreviousPage" 
@@ -109,5 +114,20 @@ fetchPlaces(10, 1)
 
 .page-info {
   font-size: 1.1rem;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  gap: 1rem;
+  color: var(--text-color-secondary);
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  margin: 0;
 }
 </style> 
