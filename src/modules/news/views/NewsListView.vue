@@ -37,6 +37,10 @@ onMounted(async () => {
     <div v-else-if="error" class="error">
       {{ error }}
     </div>
+    <div v-else-if="!news.length" class="empty-state">
+      <i class="pi pi-book" style="font-size: 3rem; color: var(--surface-500)"></i>
+      <p>Новости не найдены</p>
+    </div>
     <template v-else>
       <NewsList :news="news" />
       <div class="pagination">
@@ -69,15 +73,22 @@ onMounted(async () => {
   color: #333;
 }
 
-.loading, .error {
+.loading, .error, .empty-state {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 200px;
+  gap: 1rem;
 }
 
 .error {
   color: #dc3545;
+}
+
+.empty-state p {
+  color: var(--surface-500);
+  font-size: 1.2rem;
 }
 
 .pagination {
