@@ -16,6 +16,10 @@
           <i class="pi pi-book"></i>
           <span>Новости</span>
         </RouterLink>
+        <RouterLink to="/places" class="nav-link">
+          <i class="pi pi-map-marker"></i>
+          <span>Интересные места</span>
+        </RouterLink>
       </nav>
     </div>
   </header>

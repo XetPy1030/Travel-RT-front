@@ -181,6 +181,43 @@ export interface PaginatedNewsList {
 /**
  * 
  * @export
+ * @interface PaginatedPlaceListList
+ */
+export interface PaginatedPlaceListList {
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedPlaceListList
+     */
+    'count': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedPlaceListList
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedPlaceListList
+     */
+    'next'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedPlaceListList
+     */
+    'previous'?: string | null;
+    /**
+     * 
+     * @type {Array<PlaceList>}
+     * @memberof PaginatedPlaceListList
+     */
+    'results': Array<PlaceList>;
+}
+/**
+ * 
+ * @export
  * @interface PaginatedSettlementList
  */
 export interface PaginatedSettlementList {
@@ -1194,12 +1231,14 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @param {number} [district] 
          * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
          * @param {string} [search] A search term.
          * @param {number} [settlement] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesPlacesList: async (district?: number, ordering?: string, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiPlacesPlacesList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/places/places/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1222,6 +1261,14 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
             if (ordering !== undefined) {
                 localVarQueryParameter['ordering'] = ordering;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
             }
 
             if (search !== undefined) {
@@ -1474,13 +1521,15 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} [district] 
          * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
          * @param {string} [search] A search term.
          * @param {number} [settlement] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPlacesPlacesList(district?: number, ordering?: string, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlaceList>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesPlacesList(district, ordering, search, settlement, options);
+        async apiPlacesPlacesList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedPlaceListList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesPlacesList(district, ordering, page, pageSize, search, settlement, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesPlacesList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1638,8 +1687,8 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesPlacesList(requestParameters: ApiApiApiPlacesPlacesListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<PlaceList>> {
-            return localVarFp.apiPlacesPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
+        apiPlacesPlacesList(requestParameters: ApiApiApiPlacesPlacesListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList> {
+            return localVarFp.apiPlacesPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1791,7 +1840,7 @@ export interface ApiApiInterface {
      * @throws {RequiredError}
      * @memberof ApiApiInterface
      */
-    apiPlacesPlacesList(requestParameters?: ApiApiApiPlacesPlacesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<PlaceList>>;
+    apiPlacesPlacesList(requestParameters?: ApiApiApiPlacesPlacesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList>;
 
     /**
      * 
@@ -2098,6 +2147,20 @@ export interface ApiApiApiPlacesPlacesListRequest {
     readonly ordering?: string
 
     /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof ApiApiApiPlacesPlacesList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof ApiApiApiPlacesPlacesList
+     */
+    readonly pageSize?: number
+
+    /**
      * A search term.
      * @type {string}
      * @memberof ApiApiApiPlacesPlacesList
@@ -2294,7 +2357,7 @@ export class ApiApi extends BaseAPI implements ApiApiInterface {
      * @memberof ApiApi
      */
     public apiPlacesPlacesList(requestParameters: ApiApiApiPlacesPlacesListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiPlacesPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
+        return ApiApiFp(this.configuration).apiPlacesPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
