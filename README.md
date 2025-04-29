@@ -1,5 +1,52 @@
-# Vue 3 + TypeScript + Vite
+# Travell-RT Frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Frontend приложение для Travell-RT, построенное на Vue 3, TypeScript и Vite.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 🚀 Технологии
+
+- Vue 3
+- TypeScript
+- Vite
+- Yarn (менеджер пакетов)
+
+## 📋 Предварительные требования
+
+- Node.js (рекомендуется версия 16 или выше)
+- Yarn
+- OpenAPI Generator CLI
+
+## ⚙️ Установка
+
+1. Установите глобально OpenAPI Generator CLI:
+```bash
+npm install @openapitools/openapi-generator-cli -g
+```
+
+2. Установите зависимости проекта:
+```bash
+yarn install
+```
+
+## 🛠️ Разработка
+
+Запуск сервера разработки:
+```bash
+yarn dev
+```
+
+Сборка для продакшена:
+```bash
+yarn build
+```
+
+Предпросмотр собранного проекта:
+```bash
+yarn preview
+```
+
+## 📚 Дополнительная информация
+
+- [Vue 3 Documentation](https://vuejs.org/)
+- [TypeScript Documentation](https://www.typescriptlang.org/)
+- [Vite Documentation](https://vitejs.dev/)
+- [OpenAPI Generator Documentation](https://openapi-generator.tech/)
