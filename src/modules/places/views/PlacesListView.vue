@@ -7,6 +7,8 @@
       </div>
     </div>
 
+    <PlacesFilters @filter-change="handleFilterChange" />
+
     <div v-if="loading" class="loading">
       <ProgressSpinner />
     </div>
@@ -44,6 +46,7 @@
 import { ref, watch } from 'vue'
 import { usePlaces } from '../composables/usePlaces'
 import PlaceCard from '../components/PlaceCard.vue'
+import PlacesFilters from '../components/PlacesFilters.vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -52,6 +55,10 @@ const { places, loading, error, fetchPlaces, totalPages, hasNextPage, hasPreviou
 
 const currentPage = ref(1)
 const searchQuery = ref('')
+const filters = ref<{ regionId: number | undefined; settlementId: number | undefined }>({
+  regionId: undefined,
+  settlementId: undefined
+})
 let searchTimeout: number | null = null
 
 const handleSearch = () => {
@@ -60,16 +67,26 @@ const handleSearch = () => {
   }
   searchTimeout = setTimeout(() => {
     currentPage.value = 1
-    fetchPlaces(10, 1, searchQuery.value)
+    fetchPlacesWithFilters()
   }, 500)
 }
 
-watch(currentPage, (newPage) => {
-  fetchPlaces(10, newPage, searchQuery.value)
+const handleFilterChange = (newFilters: { regionId: number | undefined; settlementId: number | undefined }) => {
+  filters.value = newFilters
+  currentPage.value = 1
+  fetchPlacesWithFilters()
+}
+
+const fetchPlacesWithFilters = () => {
+  fetchPlaces(10, currentPage.value, searchQuery.value, filters.value.regionId, filters.value.settlementId)
+}
+
+watch(currentPage, () => {
+  fetchPlacesWithFilters()
 })
 
 // Initial fetch
-fetchPlaces(10, 1)
+fetchPlacesWithFilters()
 </script>
 
 <style scoped>
