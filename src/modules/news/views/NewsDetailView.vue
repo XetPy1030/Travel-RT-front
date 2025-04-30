@@ -4,7 +4,7 @@ import { useNewsStore } from '@/stores/useNewsStores'
 import { onMounted, computed } from 'vue'
 import { processHtmlContent } from '@/utils/htmlUtils'
 import { formatDateRu } from '@/utils/date'
-import { API_BASE_URL } from '@/config'
+import { MEDIA_BASE_URL } from '@/config'
 const route = useRoute()
 const newsStore = useNewsStore()
 
@@ -14,7 +14,7 @@ onMounted(async () => {
 
 const processedContent = computed(() => {
   if (!newsStore.currentNews?.content) return ''
-  return processHtmlContent(newsStore.currentNews.content, API_BASE_URL)
+  return processHtmlContent(newsStore.currentNews.content, MEDIA_BASE_URL)
 })
 </script>
 
