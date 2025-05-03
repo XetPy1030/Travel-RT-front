@@ -55,6 +55,31 @@
           />
         </div>
       </div>
+
+      <div class="section">
+        <div class="section-header">
+          <h2>Популярные маршруты</h2>
+          <Button 
+            label="Все маршруты" 
+            icon="pi pi-arrow-right" 
+            @click="$router.push('/routers')"
+            text
+          />
+        </div>
+        <div v-if="routersLoading" class="loading">
+          <ProgressSpinner />
+        </div>
+        <div v-else-if="routersError" class="error">
+          {{ routersError }}
+        </div>
+        <div v-else class="routers-grid">
+          <RouterCard
+            v-for="router in popularRouters"
+            :key="router.id"
+            :router="router"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -63,11 +88,13 @@
 import { onMounted, ref } from 'vue'
 import { useNews } from '@/modules/news/composables/useNews.ts'
 import { usePlaces } from '@/modules/places/composables/usePlaces.ts'
+import { useRouters } from '@/modules/routers/composables/useRouters.ts'
 import NewsCard from '@/modules/news/components/NewsCard.vue'
 import PlaceCard from '@/modules/places/components/PlaceCard.vue'
+import RouterCard from '@/modules/routers/components/RouterCard.vue'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
-import type { PlaceList } from '@/api/generated'
+import type { PlaceList, RouterList } from '@/api/generated'
 
 interface NewsItem {
   id: number
@@ -79,14 +106,17 @@ interface NewsItem {
 
 const { news: apiNews, loading: newsLoading, error: newsError, fetchNews } = useNews()
 const { places, loading: placesLoading, error: placesError, fetchPlaces } = usePlaces()
+const { routers, loading: routersLoading, error: routersError, fetchRouters } = useRouters()
 
 const latestNews = ref<NewsItem[]>([])
 const popularPlaces = ref<PlaceList[]>([])
+const popularRouters = ref<RouterList[]>([])
 
 onMounted(async () => {
   await Promise.all([
     fetchNews(3, 1),
-    fetchPlaces(3, 1)
+    fetchPlaces(3, 1),
+    fetchRouters(3, 1)
   ])
   
   latestNews.value = apiNews.value.map(item => ({
@@ -98,6 +128,7 @@ onMounted(async () => {
   }))
   
   popularPlaces.value = places.value
+  popularRouters.value = routers.value
 })
 </script>
 
@@ -182,7 +213,8 @@ onMounted(async () => {
   margin-bottom: 0 !important;
 }
 
-.places-grid {
+.places-grid,
+.routers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;

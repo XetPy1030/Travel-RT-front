@@ -1525,6 +1525,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
+         * @param {ApiRoutersListDifficultyEnum} [difficulty] Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
          * @param {number} [district] 
          * @param {string} [ordering] Which field to use when ordering the results.
          * @param {number} [page] A page number within the paginated result set.
@@ -1534,7 +1535,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoutersList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiRoutersList: async (difficulty?: ApiRoutersListDifficultyEnum, district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/routers/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1550,6 +1551,10 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication jwtAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (difficulty !== undefined) {
+                localVarQueryParameter['difficulty'] = difficulty;
+            }
 
             if (district !== undefined) {
                 localVarQueryParameter['district'] = district;
@@ -1844,6 +1849,7 @@ export const ApiApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {ApiRoutersListDifficultyEnum} [difficulty] Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
          * @param {number} [district] 
          * @param {string} [ordering] Which field to use when ordering the results.
          * @param {number} [page] A page number within the paginated result set.
@@ -1853,8 +1859,8 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoutersList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedRouterListList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoutersList(district, ordering, page, pageSize, search, settlement, options);
+        async apiRoutersList(difficulty?: ApiRoutersListDifficultyEnum, district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedRouterListList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoutersList(difficulty, district, ordering, page, pageSize, search, settlement, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.apiRoutersList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2031,7 +2037,7 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         apiRoutersList(requestParameters: ApiApiApiRoutersListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList> {
-            return localVarFp.apiRoutersList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
+            return localVarFp.apiRoutersList(requestParameters.difficulty, requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2557,6 +2563,13 @@ export interface ApiApiApiPlacesRetrieveRequest {
  */
 export interface ApiApiApiRoutersListRequest {
     /**
+     * Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
+     * @type {'easy' | 'hard' | 'medium'}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly difficulty?: ApiRoutersListDifficultyEnum
+
+    /**
      * 
      * @type {number}
      * @memberof ApiApiApiRoutersList
@@ -2803,7 +2816,7 @@ export class ApiApi extends BaseAPI implements ApiApiInterface {
      * @memberof ApiApi
      */
     public apiRoutersList(requestParameters: ApiApiApiRoutersListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiRoutersList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
+        return ApiApiFp(this.configuration).apiRoutersList(requestParameters.difficulty, requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2828,5 +2841,14 @@ export const ApiLocationsSettlementsListTypeEnum = {
     VillageHamlet: 'village_hamlet'
 } as const;
 export type ApiLocationsSettlementsListTypeEnum = typeof ApiLocationsSettlementsListTypeEnum[keyof typeof ApiLocationsSettlementsListTypeEnum];
+/**
+ * @export
+ */
+export const ApiRoutersListDifficultyEnum = {
+    Easy: 'easy',
+    Hard: 'hard',
+    Medium: 'medium'
+} as const;
+export type ApiRoutersListDifficultyEnum = typeof ApiRoutersListDifficultyEnum[keyof typeof ApiRoutersListDifficultyEnum];
 
 

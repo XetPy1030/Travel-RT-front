@@ -20,6 +20,10 @@
           <i class="pi pi-map-marker"></i>
           <span>Интересные места</span>
         </RouterLink>
+        <RouterLink to="/routers" class="nav-link">
+          <i class="pi pi-directions"></i>
+          <span>Маршруты</span>
+        </RouterLink>
       </nav>
     </div>
   </header>

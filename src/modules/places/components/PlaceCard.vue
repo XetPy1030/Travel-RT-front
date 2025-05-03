@@ -41,7 +41,7 @@ const locationName = computed(() => {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background: white;
+  background: var(--surface-card);
   transition: transform 0.3s ease;
 }
 

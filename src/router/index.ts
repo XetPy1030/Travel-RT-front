@@ -5,6 +5,8 @@ import NewsListView from "@/modules/news/views/NewsListView.vue";
 import PlacesListView from '@/modules/places/views/PlacesListView.vue'
 import PlaceDetailView from '@/modules/places/views/PlaceDetailView.vue'
 import HomeView from '@/modules/home/views/HomeView.vue'
+import RoutersListView from "@/modules/routers/views/RoutersListView.vue";
+import RouterDetailView from "@/modules/routers/views/RouterDetailView.vue";
 
 const routes = [
     {
@@ -31,6 +33,23 @@ const routes = [
         path: '/places/:id',
         name: 'place-detail',
         component: PlaceDetailView
+    },
+    {
+        path: '/routers',
+        name: 'routers',
+        component: RoutersListView,
+        // TODO: use meta?
+        meta: {
+            title: 'Маршруты'
+        }
+    },
+    {
+        path: '/routers/:id',
+        name: 'router-detail',
+        component: RouterDetailView,
+        meta: {
+            title: 'Маршрут'
+        }
     }
 ];
 
