@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { $api } from '@/api'
-import type { PlaceList, PaginatedPlaceListList } from "@/api/generated"
+import type { PlaceList } from "@/api/generated"
 
 export const usePlaces = () => {
   const places = ref<PlaceList[]>([])
@@ -21,7 +21,7 @@ export const usePlaces = () => {
     try {
       loading.value = true
       error.value = null
-      const response = await $api.api.apiPlacesPlacesList({
+      const response = await $api.api.apiPlacesList({
         pageSize,
         page,
         search: searchQuery,
@@ -43,7 +43,7 @@ export const usePlaces = () => {
     try {
       loading.value = true
       error.value = null
-      const response = await $api.api.apiPlacesPlacesRetrieve({ id })
+      const response = await $api.api.apiPlacesRetrieve({ id })
       currentPlace.value = response.data
     } catch (e) {
       error.value = e as Error

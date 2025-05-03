@@ -24,6 +24,21 @@ import type { RequestArgs } from './base';
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
 /**
+ * * `easy` - Легкий * `medium` - Средний * `hard` - Сложный
+ * @export
+ * @enum {string}
+ */
+
+export const DifficultyEnum = {
+    Easy: 'easy',
+    Medium: 'medium',
+    Hard: 'hard'
+} as const;
+
+export type DifficultyEnum = typeof DifficultyEnum[keyof typeof DifficultyEnum];
+
+
+/**
  * 
  * @export
  * @interface District
@@ -214,6 +229,43 @@ export interface PaginatedPlaceListList {
      * @memberof PaginatedPlaceListList
      */
     'results': Array<PlaceList>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedRouterListList
+ */
+export interface PaginatedRouterListList {
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedRouterListList
+     */
+    'count': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaginatedRouterListList
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedRouterListList
+     */
+    'next'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedRouterListList
+     */
+    'previous'?: string | null;
+    /**
+     * 
+     * @type {Array<RouterList>}
+     * @memberof PaginatedRouterListList
+     */
+    'results': Array<RouterList>;
 }
 /**
  * 
@@ -448,6 +500,150 @@ export interface PlaceList {
      */
     'images': Array<PlaceImage>;
 }
+/**
+ * 
+ * @export
+ * @interface RouterDetail
+ */
+export interface RouterDetail {
+    /**
+     * 
+     * @type {number}
+     * @memberof RouterDetail
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'short_description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'full_description': string;
+    /**
+     * Загрузите изображение для маршрута
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'image'?: string | null;
+    /**
+     * Укажите продолжительность маршрута в формате ЧЧ:ММ:СС
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'duration': string;
+    /**
+     * Выберите уровень сложности маршрута  * `easy` - Легкий * `medium` - Средний * `hard` - Сложный
+     * @type {DifficultyEnum}
+     * @memberof RouterDetail
+     */
+    'difficulty'?: DifficultyEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'district_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'settlement_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterDetail
+     */
+    'updated_at': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface RouterList
+ */
+export interface RouterList {
+    /**
+     * 
+     * @type {number}
+     * @memberof RouterList
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterList
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterList
+     */
+    'short_description': string;
+    /**
+     * Загрузите изображение для маршрута
+     * @type {string}
+     * @memberof RouterList
+     */
+    'image'?: string | null;
+    /**
+     * Укажите продолжительность маршрута в формате ЧЧ:ММ:СС
+     * @type {string}
+     * @memberof RouterList
+     */
+    'duration': string;
+    /**
+     * Выберите уровень сложности маршрута  * `easy` - Легкий * `medium` - Средний * `hard` - Сложный
+     * @type {DifficultyEnum}
+     * @memberof RouterList
+     */
+    'difficulty'?: DifficultyEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterList
+     */
+    'district_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterList
+     */
+    'settlement_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterList
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterList
+     */
+    'updated_at': string;
+}
+
+
 /**
  * 
  * @export
@@ -1192,7 +1388,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
-         * @param {number} id 
+         * @param {number} id A unique integer value identifying this Новость.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1238,8 +1434,8 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesPlacesList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/places/places/`;
+        apiPlacesList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/places/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1296,10 +1492,110 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesPlacesRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiPlacesRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiPlacesPlacesRetrieve', 'id', id)
-            const localVarPath = `/api/places/places/{id}/`
+            assertParamExists('apiPlacesRetrieve', 'id', id)
+            const localVarPath = `/api/places/{id}/`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwtAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [district] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {number} [settlement] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoutersList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/routers/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication jwtAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (district !== undefined) {
+                localVarQueryParameter['district'] = district;
+            }
+
+            if (ordering !== undefined) {
+                localVarQueryParameter['ordering'] = ordering;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (settlement !== undefined) {
+                localVarQueryParameter['settlement'] = settlement;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id A unique integer value identifying this Маршрут.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoutersRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiRoutersRetrieve', 'id', id)
+            const localVarPath = `/api/routers/{id}/`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1507,7 +1803,7 @@ export const ApiApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} id 
+         * @param {number} id A unique integer value identifying this Новость.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1528,10 +1824,10 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPlacesPlacesList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedPlaceListList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesPlacesList(district, ordering, page, pageSize, search, settlement, options);
+        async apiPlacesList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedPlaceListList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesList(district, ordering, page, pageSize, search, settlement, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesPlacesList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1540,10 +1836,39 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPlacesPlacesRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlaceDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesPlacesRetrieve(id, options);
+        async apiPlacesRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlaceDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesRetrieve(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesPlacesRetrieve']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [district] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {number} [settlement] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoutersList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedRouterListList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoutersList(district, ordering, page, pageSize, search, settlement, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiRoutersList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} id A unique integer value identifying this Маршрут.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRoutersRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RouterDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoutersRetrieve(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiRoutersRetrieve']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1683,21 +2008,39 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         },
         /**
          * 
-         * @param {ApiApiApiPlacesPlacesListRequest} requestParameters Request parameters.
+         * @param {ApiApiApiPlacesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesPlacesList(requestParameters: ApiApiApiPlacesPlacesListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList> {
-            return localVarFp.apiPlacesPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
+        apiPlacesList(requestParameters: ApiApiApiPlacesListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList> {
+            return localVarFp.apiPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {ApiApiApiPlacesPlacesRetrieveRequest} requestParameters Request parameters.
+         * @param {ApiApiApiPlacesRetrieveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesPlacesRetrieve(requestParameters: ApiApiApiPlacesPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail> {
-            return localVarFp.apiPlacesPlacesRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        apiPlacesRetrieve(requestParameters: ApiApiApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail> {
+            return localVarFp.apiPlacesRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ApiApiApiRoutersListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoutersList(requestParameters: ApiApiApiRoutersListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList> {
+            return localVarFp.apiRoutersList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ApiApiApiRoutersRetrieveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRoutersRetrieve(requestParameters: ApiApiApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<RouterDetail> {
+            return localVarFp.apiRoutersRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1835,21 +2178,39 @@ export interface ApiApiInterface {
 
     /**
      * 
-     * @param {ApiApiApiPlacesPlacesListRequest} requestParameters Request parameters.
+     * @param {ApiApiApiPlacesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApiInterface
      */
-    apiPlacesPlacesList(requestParameters?: ApiApiApiPlacesPlacesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList>;
+    apiPlacesList(requestParameters?: ApiApiApiPlacesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList>;
 
     /**
      * 
-     * @param {ApiApiApiPlacesPlacesRetrieveRequest} requestParameters Request parameters.
+     * @param {ApiApiApiPlacesRetrieveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApiInterface
      */
-    apiPlacesPlacesRetrieve(requestParameters: ApiApiApiPlacesPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail>;
+    apiPlacesRetrieve(requestParameters: ApiApiApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail>;
+
+    /**
+     * 
+     * @param {ApiApiApiRoutersListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApiApiInterface
+     */
+    apiRoutersList(requestParameters?: ApiApiApiRoutersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList>;
+
+    /**
+     * 
+     * @param {ApiApiApiRoutersRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApiApiInterface
+     */
+    apiRoutersRetrieve(requestParameters: ApiApiApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<RouterDetail>;
 
 }
 
@@ -2119,7 +2480,7 @@ export interface ApiApiApiNewsListRequest {
  */
 export interface ApiApiApiNewsRetrieveRequest {
     /**
-     * 
+     * A unique integer value identifying this Новость.
      * @type {number}
      * @memberof ApiApiApiNewsRetrieve
      */
@@ -2127,64 +2488,127 @@ export interface ApiApiApiNewsRetrieveRequest {
 }
 
 /**
- * Request parameters for apiPlacesPlacesList operation in ApiApi.
+ * Request parameters for apiPlacesList operation in ApiApi.
  * @export
- * @interface ApiApiApiPlacesPlacesListRequest
+ * @interface ApiApiApiPlacesListRequest
  */
-export interface ApiApiApiPlacesPlacesListRequest {
+export interface ApiApiApiPlacesListRequest {
     /**
      * 
      * @type {number}
-     * @memberof ApiApiApiPlacesPlacesList
+     * @memberof ApiApiApiPlacesList
      */
     readonly district?: number
 
     /**
      * Which field to use when ordering the results.
      * @type {string}
-     * @memberof ApiApiApiPlacesPlacesList
+     * @memberof ApiApiApiPlacesList
      */
     readonly ordering?: string
 
     /**
      * A page number within the paginated result set.
      * @type {number}
-     * @memberof ApiApiApiPlacesPlacesList
+     * @memberof ApiApiApiPlacesList
      */
     readonly page?: number
 
     /**
      * Number of results to return per page.
      * @type {number}
-     * @memberof ApiApiApiPlacesPlacesList
+     * @memberof ApiApiApiPlacesList
      */
     readonly pageSize?: number
 
     /**
      * A search term.
      * @type {string}
-     * @memberof ApiApiApiPlacesPlacesList
+     * @memberof ApiApiApiPlacesList
      */
     readonly search?: string
 
     /**
      * 
      * @type {number}
-     * @memberof ApiApiApiPlacesPlacesList
+     * @memberof ApiApiApiPlacesList
      */
     readonly settlement?: number
 }
 
 /**
- * Request parameters for apiPlacesPlacesRetrieve operation in ApiApi.
+ * Request parameters for apiPlacesRetrieve operation in ApiApi.
  * @export
- * @interface ApiApiApiPlacesPlacesRetrieveRequest
+ * @interface ApiApiApiPlacesRetrieveRequest
  */
-export interface ApiApiApiPlacesPlacesRetrieveRequest {
+export interface ApiApiApiPlacesRetrieveRequest {
     /**
      * A unique integer value identifying this Интересное место.
      * @type {number}
-     * @memberof ApiApiApiPlacesPlacesRetrieve
+     * @memberof ApiApiApiPlacesRetrieve
+     */
+    readonly id: number
+}
+
+/**
+ * Request parameters for apiRoutersList operation in ApiApi.
+ * @export
+ * @interface ApiApiApiRoutersListRequest
+ */
+export interface ApiApiApiRoutersListRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly district?: number
+
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly search?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ApiApiApiRoutersList
+     */
+    readonly settlement?: number
+}
+
+/**
+ * Request parameters for apiRoutersRetrieve operation in ApiApi.
+ * @export
+ * @interface ApiApiApiRoutersRetrieveRequest
+ */
+export interface ApiApiApiRoutersRetrieveRequest {
+    /**
+     * A unique integer value identifying this Маршрут.
+     * @type {number}
+     * @memberof ApiApiApiRoutersRetrieve
      */
     readonly id: number
 }
@@ -2351,24 +2775,46 @@ export class ApiApi extends BaseAPI implements ApiApiInterface {
 
     /**
      * 
-     * @param {ApiApiApiPlacesPlacesListRequest} requestParameters Request parameters.
+     * @param {ApiApiApiPlacesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public apiPlacesPlacesList(requestParameters: ApiApiApiPlacesPlacesListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiPlacesPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
+    public apiPlacesList(requestParameters: ApiApiApiPlacesListRequest = {}, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).apiPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {ApiApiApiPlacesPlacesRetrieveRequest} requestParameters Request parameters.
+     * @param {ApiApiApiPlacesRetrieveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public apiPlacesPlacesRetrieve(requestParameters: ApiApiApiPlacesPlacesRetrieveRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiPlacesPlacesRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public apiPlacesRetrieve(requestParameters: ApiApiApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).apiPlacesRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ApiApiApiRoutersListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApiApi
+     */
+    public apiRoutersList(requestParameters: ApiApiApiRoutersListRequest = {}, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).apiRoutersList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ApiApiApiRoutersRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApiApi
+     */
+    public apiRoutersRetrieve(requestParameters: ApiApiApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).apiRoutersRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
