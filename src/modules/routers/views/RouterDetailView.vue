@@ -123,7 +123,7 @@ const getDifficultySeverity = (difficulty: ApiRoutersListDifficultyEnum) => {
 }
 
 const formatDuration = (duration: string) => {
-  const [hours, minutes, seconds] = duration.split(':').map(Number)
+  const [hours, minutes] = duration.split(':').map(Number)
   if (hours > 0) {
     return `${hours} ч ${minutes} мин`
   }

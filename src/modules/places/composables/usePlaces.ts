@@ -1,10 +1,10 @@
 import { ref } from 'vue'
 import { $api } from '@/api'
-import type { PlaceList } from "@/api/generated"
+import type {PlaceDetail, PlaceList} from "@/api/generated"
 
 export const usePlaces = () => {
   const places = ref<PlaceList[]>([])
-  const currentPlace = ref<PlaceList | null>(null)
+  const currentPlace = ref<PlaceDetail | null>(null)
   const loading = ref(false)
   const error = ref<Error | null>(null)
   const totalPages = ref(1)
