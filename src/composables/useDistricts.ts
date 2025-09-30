@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { $api } from '@/api'
-import type { District, PaginatedDistrictList } from "@/api/generated"
+import type { District } from "@/api/generated"
 
 export const useDistricts = () => {
   const districts = ref<District[]>([])

@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { $api } from '@/api'
-import type { Settlement, PaginatedSettlementList } from "@/api/generated"
+import type { Settlement } from "@/api/generated"
 
 export const useSettlements = () => {
   const settlements = ref<Settlement[]>([])
