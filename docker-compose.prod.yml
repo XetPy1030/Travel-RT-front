@@ -7,8 +7,6 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
-    ports:
-      - 80:80
     networks:
       - travel-rt-network
 
@@ -16,4 +14,4 @@ networks:
   travel-rt-network:
     name: travel-rt-network
     driver: bridge
-#    external: true
+    external: true
