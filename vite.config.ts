@@ -15,6 +15,7 @@ export default defineConfig({
       '@news': '/src/modules/news',
       '@places': '/src/modules/places',
       '@routers': '/src/modules/routers',
+      '@partners': '/src/modules/partners',
       '@stores': '/src/stores',
     }
   }

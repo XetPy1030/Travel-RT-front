@@ -83,6 +83,33 @@
           />
         </div>
       </div>
+
+      <!-- Партнеры -->
+      <div class="section section--partners">
+        <div class="section-header">
+          <h2>Наши партнеры</h2>
+        </div>
+
+        <!-- Главные партнеры -->
+        <div v-if="partnersLoading" class="loading">
+          <ProgressSpinner />
+        </div>
+        <div v-else-if="partnersError" class="error">
+          {{ partnersError }}
+        </div>
+        <template v-else>
+          <FeaturedPartners 
+            v-if="featuredPartners.length" 
+            :partners="featuredPartners" 
+          />
+
+          <!-- Остальные партнеры с автоскроллингом -->
+          <div v-if="regularPartners.length" class="partners-section">
+            <h3 class="partners-section__title">Все партнеры</h3>
+            <PartnersScroller :partners="regularPartners" />
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -92,9 +119,12 @@ import { onMounted, ref } from 'vue'
 import { useNews } from '@news/composables/useNews.ts'
 import { usePlaces } from '@places/composables/usePlaces.ts'
 import { useRouters } from '@routers/composables/useRouters.ts'
+import { usePartners } from '@partners/composables/usePartners.ts'
 import NewsCard from '@news/components/NewsCard.vue'
 import PlaceCard from '@places/components/PlaceCard.vue'
 import RouterCard from '@routers/components/RouterCard.vue'
+import FeaturedPartners from '@partners/components/FeaturedPartners.vue'
+import PartnersScroller from '@partners/components/PartnersScroller.vue'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
 import type { PlaceList, RouterList } from '@/api/generated'
@@ -110,6 +140,13 @@ interface NewsItem {
 const { news: apiNews, loading: newsLoading, error: newsError, fetchNews } = useNews()
 const { places, loading: placesLoading, error: placesError, fetchPlaces } = usePlaces()
 const { routers, loading: routersLoading, error: routersError, fetchRouters } = useRouters()
+const { 
+  featuredPartners, 
+  regularPartners, 
+  loading: partnersLoading, 
+  error: partnersError, 
+  fetchPartners 
+} = usePartners()
 
 const latestNews = ref<NewsItem[]>([])
 const popularPlaces = ref<PlaceList[]>([])
@@ -119,7 +156,8 @@ onMounted(async () => {
   await Promise.all([
     fetchNews(3, 1),
     fetchPlaces(3, 1),
-    fetchRouters(3, 1)
+    fetchRouters(3, 1),
+    fetchPartners()
   ])
 
   latestNews.value = apiNews.value.map(item => ({
@@ -305,6 +343,27 @@ onMounted(async () => {
   .routers-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+}
+
+/* === 🤝 Партнеры === */
+
+.partners-section {
+  margin-top: 2rem;
+}
+
+.partners-section__title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .partners-section__title {
+    font-size: 1.2rem;
+    margin-bottom: 1.25rem;
   }
 }
 </style>
