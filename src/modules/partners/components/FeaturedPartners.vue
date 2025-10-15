@@ -46,9 +46,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import type { Partner } from '../composables/usePartners'
+import type { Partner } from '@/modules/partners'
 
-const props = defineProps<{ partners: Partner[] }>()
+defineProps<{ partners: Partner[] }>()
 
 const cardsRef = ref<HTMLElement[]>([])
 const isVisible = ref(false)
