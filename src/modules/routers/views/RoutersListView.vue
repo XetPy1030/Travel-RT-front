@@ -3,7 +3,12 @@
     <div class="header">
       <h1>Маршруты</h1>
       <div class="search-container">
-        <InputText v-model="searchQuery" placeholder="Поиск маршрутов..." @input="handleSearch" />
+        <InputText
+            v-model="searchQuery"
+            placeholder="Поиск маршрутов..."
+            @input="onSearchInput"
+            class="search-input"
+        />
       </div>
     </div>
 
@@ -22,7 +27,7 @@
       <p>Маршруты не найдены</p>
     </div>
 
-    <div v-else class="grid">
+    <div v-else class="cards-grid">
       <RouterCard v-for="router in routers" :key="router.id" :router="router" />
     </div>
 
@@ -43,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -62,17 +67,19 @@ const filters = ref<{ regionId?: number; settlementId?: number; difficulty?: Api
   settlementId: undefined,
   difficulty: undefined
 })
-let searchTimeout: number | null = null
+let searchTimeout: ReturnType<typeof setTimeout> | null = null
 
-const handleSearch = () => {
-  if (searchTimeout) {
-    clearTimeout(searchTimeout)
-  }
+const onSearchInput = () => {
+  if (searchTimeout) clearTimeout(searchTimeout)
   searchTimeout = setTimeout(() => {
     currentPage.value = 1
     fetchRoutersList()
-  }, 500)
+  }, 400)
 }
+
+onUnmounted(() => {
+  if (searchTimeout) clearTimeout(searchTimeout)
+})
 
 const handleFilterChange = (newFilters: { regionId?: number; settlementId?: number; difficulty?: ApiRoutersListDifficultyEnum }) => {
   filters.value = newFilters
@@ -93,35 +100,27 @@ fetchRoutersList()
 </script>
 
 <style scoped>
-.routers-list {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .search-container {
   width: 300px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+.search-input {
+  width: 100%;
+  min-width: 200px;
 }
 
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
 .pagination {
@@ -130,24 +129,33 @@ fetchRoutersList()
   align-items: center;
   gap: 1rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
-.page-info {
-  font-size: 1.1rem;
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .search-container {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
 }
 
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  gap: 1rem;
-  color: var(--text-color-secondary);
+@media (max-width: 600px) {
+  .header {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .search-container {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .search-input {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
 }
-
-.empty-state p {
-  font-size: 1.2rem;
-  margin: 0;
-}
-</style> 
+</style>

@@ -3,7 +3,12 @@
     <div class="header">
       <h1>Интересные места</h1>
       <div class="search-container">
-        <InputText v-model="searchQuery" placeholder="Поиск мест..." @input="handleSearch" />
+        <InputText
+            v-model="searchQuery"
+            placeholder="Поиск мест..."
+            @input="handleSearch"
+            class="search-input"
+        />
       </div>
     </div>
 
@@ -27,16 +32,16 @@
     </div>
 
     <div v-if="!loading && !error && places.length" class="pagination">
-      <Button 
-        icon="pi pi-chevron-left" 
-        :disabled="!hasPreviousPage" 
-        @click="currentPage--" 
+      <Button
+          icon="pi pi-chevron-left"
+          :disabled="!hasPreviousPage"
+          @click="currentPage--"
       />
       <span class="page-info">Страница {{ currentPage }} из {{ totalPages }}</span>
-      <Button 
-        icon="pi pi-chevron-right" 
-        :disabled="!hasNextPage" 
-        @click="currentPage++" 
+      <Button
+          icon="pi pi-chevron-right"
+          :disabled="!hasNextPage"
+          @click="currentPage++"
       />
     </div>
   </div>
@@ -62,9 +67,7 @@ const filters = ref<{ regionId: number | undefined; settlementId: number | undef
 let searchTimeout: number | null = null
 
 const handleSearch = () => {
-  if (searchTimeout) {
-    clearTimeout(searchTimeout)
-  }
+  if (searchTimeout) clearTimeout(searchTimeout)
   searchTimeout = setTimeout(() => {
     currentPage.value = 1
     fetchPlacesWithFilters()
@@ -101,10 +104,21 @@ fetchPlacesWithFilters()
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.header h1 {
+  font-size: 2rem;
+  margin: 0;
 }
 
 .search-container {
   width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  min-width: 200px;
 }
 
 .places-grid {
@@ -127,6 +141,7 @@ fetchPlacesWithFilters()
   align-items: center;
   gap: 1rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .page-info {
@@ -147,4 +162,58 @@ fetchPlacesWithFilters()
   font-size: 1.2rem;
   margin: 0;
 }
-</style> 
+
+/* === 📱 Адаптив === */
+
+@media (max-width: 1200px) {
+  .places-list {
+    padding: 1.5rem;
+  }
+  .places-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  .search-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .places-list {
+    padding: 1rem;
+  }
+  .header {
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .search-container {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .search-input {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  .places-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .page-info {
+    font-size: 1rem;
+  }
+}
+</style>

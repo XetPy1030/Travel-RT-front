@@ -54,8 +54,8 @@
 import { ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
-import { useSettlements } from '@/composables/useSettlements'
-import { useDistricts } from '@/composables/useDistricts'
+import { useSettlements } from '@composables/useSettlements'
+import { useDistricts } from '@composables/useDistricts'
 import type { District, Settlement } from '@/api/generated'
 
 const { settlements, loading: loadingSettlements, fetchSettlements } = useSettlements()
@@ -113,6 +113,7 @@ fetchSettlements()
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .filter-group {
@@ -120,6 +121,7 @@ fetchSettlements()
   flex-direction: column;
   gap: 0.5rem;
   min-width: 250px;
+  flex: 1 1 250px;
 }
 
 .filter-header {
@@ -130,6 +132,34 @@ fetchSettlements()
 
 label {
   font-weight: 500;
-  color: var(--text-color-secondary);
+  color: var(--text-color-secondary, #6c757d);
 }
-</style> 
+
+@media (max-width: 600px) {
+  .places-filters {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filter-group {
+    min-width: 180px;
+    width: 180px;
+    flex: 0 0 180px;
+    gap: 0.2rem;
+    padding: 0.15rem 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .filter-group {
+    min-width: 140px;
+    width: 140px;
+    flex: 0 0 140px;
+    gap: 0.1rem;
+    padding: 0.1rem 0;
+  }
+}
+</style>

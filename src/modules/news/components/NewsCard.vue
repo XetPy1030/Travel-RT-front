@@ -1,7 +1,26 @@
+<template>
+  <RouterLink
+      :to="{ name: 'news-detail', params: { id: news.id }}"
+      class="card-link"
+  >
+    <article ref="cardRef" class="card" :class="{ 'card--visible': isVisible }">
+      <div class="card__image" v-if="news.imageUrl">
+        <img :src="news.imageUrl" :alt="news.title" />
+      </div>
+
+      <div class="card__content">
+        <p class="card__date">{{ formattedDate.fullDate }} — {{ formattedDate.weekday }}</p>
+        <h3 class="card__title">{{ news.title }}</h3>
+        <p class="card__description">{{ news.description }}</p>
+      </div>
+    </article>
+  </RouterLink>
+</template>
+
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { formatDateRu } from '@/utils/date'
-import { computed } from 'vue'
 
 interface NewsItem {
   id: number
@@ -11,136 +30,112 @@ interface NewsItem {
   date: string
 }
 
-const props = defineProps<{
-  news: NewsItem
-}>()
+const props = defineProps<{ news: NewsItem }>()
 
 const formattedDate = computed(() => {
-  const date = formatDateRu(props.news.date)
-  return {
-    fullDate: date.fullDate.toUpperCase(),
-    weekday: date.weekday.toUpperCase()
-  }
+  const d = formatDateRu(props.news.date)
+  return { fullDate: d.fullDate.toUpperCase(), weekday: d.weekday.toUpperCase() }
 })
+
+const cardRef = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
+let observer: IntersectionObserver | null = null
+
+onMounted(() => {
+  if (!cardRef.value) return
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        isVisible.value = true
+        observer?.unobserve(e.target)
+      }
+    })
+  })
+  observer.observe(cardRef.value)
+})
+
+onBeforeUnmount(() => observer?.disconnect())
 </script>
 
-<template>
-  <RouterLink
-    :to="{ name: 'news-detail', params: { id: news.id }}"
-    class="news-card"
-  >
-    <div class="news-card__date">
-      <div class="news-card__date-main">{{ formattedDate.fullDate }}</div>
-      <div class="news-card__date-weekday">{{ formattedDate.weekday }}</div>
-    </div>
-    <div class="news-card__content-wrapper">
-      <div class="news-card__content">
-        <h3 class="news-card__title">{{ news.title }}</h3>
-        <p class="news-card__description">{{ news.description }}</p>
-      </div>
-      <div class="news-card__image" v-if="news.imageUrl">
-        <img :src="news.imageUrl" :alt="news.title">
-      </div>
-    </div>
-  </RouterLink>
-</template>
-
 <style scoped>
-.news-card {
-  display: flex;
-  flex-direction: row;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.card-link {
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s ease;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  gap: 1.5rem;
+  display: block;
 }
 
-.news-card:hover {
-  transform: translateX(5px);
-}
-
-.news-card__date {
-  min-width: 140px;
-  color: #888;
-  text-align: left;
-  padding: 0.5rem 1rem;
-  border-right: 1px solid #eee;
+.card {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  align-self: flex-start;
-  padding-top: 0;
-}
-
-.news-card__date-main {
-  font-size: 0.9rem;
-  font-weight: 600;
-  order: -1;
-}
-
-.news-card__date-weekday {
-  font-size: 0.8rem;
-  color: #999;
-  font-weight: 700;
-  order: 1;
-}
-
-.news-card__content-wrapper {
-  display: flex;
-  gap: 1.5rem;
-  width: 100%;
-}
-
-.news-card__content {
-  flex: 1;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 200px;
-  max-width: calc(100% - 250px - 1.5rem);
-}
-
-.news-card__title {
-  margin: 0 0 12px;
-  font-size: 1.2rem;
-  color: #333;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  background: var(--surface-card, #fff);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  text-overflow: ellipsis;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s ease;
+  height: 100%;
 }
 
-.news-card__description {
-  margin: 0;
-  color: #666;
-  font-size: 0.9rem;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  max-width: 600px;
-  height: 160px;
-  overflow: hidden;
+.card--visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.news-card__image {
-  width: 250px;
-  min-width: 250px;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 4px;
-  margin-left: auto;
+.card:hover {
+  transform: translateY(-4px);
 }
 
-.news-card__image img {
+.card__image {
+  aspect-ratio: 16/9;
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.card__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.card__content {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.card__date {
+  color: var(--text-color-secondary, #777);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.card__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color, #333);
+}
+
+.card__description {
+  color: var(--text-color-secondary, #555);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 📱 адаптив */
+@media (max-width: 768px) {
+  .card__content {
+    padding: 1rem;
+  }
+  .card__title {
+    font-size: 1.1rem;
+  }
 }
 </style>

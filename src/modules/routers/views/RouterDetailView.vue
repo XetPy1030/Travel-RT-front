@@ -1,11 +1,7 @@
 <template>
   <div class="router-detail" v-if="currentRouter">
     <div class="header">
-      <Button
-          icon="pi pi-arrow-left"
-          text
-          @click="router.back()"
-      />
+      <BackButton />
       <h1>{{ currentRouter.title }}</h1>
     </div>
 
@@ -71,20 +67,19 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import Button from 'primevue/button'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import Tag from 'primevue/tag'
 import ProgressSpinner from 'primevue/progressspinner'
 import Message from 'primevue/message'
-import {useRouters} from '../composables/useRouters'
+import { useRouters } from '../composables/useRouters'
 import type {ApiRoutersListDifficultyEnum} from '@/api/generated'
-import {processHtmlContent} from '@/utils/htmlUtils'
+import { processHtmlContent } from '@/utils/htmlUtils'
 import {MEDIA_BASE_URL} from '@/config'
+import BackButton from "@components/BackButton.vue";
 
 const route = useRoute()
-const router = useRouter()
-const {currentRouter, loading, error, fetchRouterById} = useRouters()
+const { currentRouter, loading, error, fetchRouterById } = useRouters()
 
 const locationName = computed(() => {
   if (!currentRouter.value) return ''
@@ -178,16 +173,20 @@ fetchRouterById(Number(route.params.id))
 .image-section {
   position: relative;
   aspect-ratio: 16/9;
+  min-height: 180px;
+  max-height: 320px;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 1.5rem;
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--surface-border, #e0e0e0);
+  background: #f8f8f8;
 }
 
 .main-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .image-placeholder {
@@ -369,6 +368,22 @@ fetchRouterById(Number(route.params.id))
   margin: 2rem;
 }
 
+@media (max-width: 1200px) {
+  .router-detail {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .sidebar {
+    width: 320px;
+    margin-left: 0.5rem;
+    padding: 1rem;
+  }
+  img {
+    min-height: 120px;
+    max-height: 180px;
+  }
+}
+
 @media (max-width: 960px) {
   .content {
     flex-direction: column;
@@ -378,4 +393,48 @@ fetchRouterById(Number(route.params.id))
     width: 100%;
   }
 }
+
+@media (max-width: 900px) {
+  .router-detail {
+    padding: 0.5rem;
+  }
+  .content {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+  .main-content {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .router-detail {
+    padding: 0.25rem;
+  }
+  .header h1 {
+    font-size: 1.3rem;
+  }
+  .footer-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  .meta-item {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+  }
+  .sidebar {
+    padding: 0.5rem;
+  }
+  .description {
+    margin-bottom: 1rem;
+  }
+}
+
 </style> 

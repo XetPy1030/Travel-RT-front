@@ -1,12 +1,12 @@
-import {createWebHistory, createRouter} from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
-import NewsDetailView from "@/modules/news/views/NewsDetailView.vue";
-import NewsListView from "@/modules/news/views/NewsListView.vue";
-import PlacesListView from '@/modules/places/views/PlacesListView.vue'
-import PlaceDetailView from '@/modules/places/views/PlaceDetailView.vue'
-import HomeView from '@/modules/home/views/HomeView.vue'
-import RoutersListView from "@/modules/routers/views/RoutersListView.vue";
-import RouterDetailView from "@/modules/routers/views/RouterDetailView.vue";
+import NewsDetailView from "@news/views/NewsDetailView.vue";
+import NewsListView from "@news/views/NewsListView.vue";
+import PlacesListView from '@places/views/PlacesListView.vue'
+import PlaceDetailView from '@places/views/PlaceDetailView.vue'
+import HomeView from '@home/views/HomeView.vue'
+import RoutersListView from "@routers/views/RoutersListView.vue";
+import RouterDetailView from "@routers/views/RouterDetailView.vue";
 
 const routes = [
     {
@@ -56,6 +56,24 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+const RUS_ROUTE_NAMES: Record<string, string> = {
+    'home': 'Главная',
+    'news-list': 'Новости',
+    'news-detail': 'Новость',
+    'places': 'Места',
+    'place-detail': 'Место',
+    'routers': 'Маршруты',
+    'router-detail': 'Маршрут',
+}
+
+router.beforeEach((to) => {
+    if (to.name && to.name in RUS_ROUTE_NAMES) {
+        document.title = `Путешествуем РТ | ${RUS_ROUTE_NAMES[to.name as string]}`;
+    } else {
+        document.title = 'Путешествуем РТ';
+    }
 })
 
 export default router;

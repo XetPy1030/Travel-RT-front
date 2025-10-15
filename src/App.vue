@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import AppHeader from './components/AppHeader.vue'
-import AppFooter from './components/AppFooter.vue'
+import AppHeader from '@components/AppHeader.vue'
+import AppFooter from '@components/AppFooter.vue'
+import UpButton from "@components/UpButton.vue";
 import 'primeicons/primeicons.css'
 </script>
 
@@ -9,6 +10,7 @@ import 'primeicons/primeicons.css'
       <AppHeader />
       <main class="main-content">
         <RouterView />
+        <UpButton />
       </main>
       <AppFooter />
     </div>
