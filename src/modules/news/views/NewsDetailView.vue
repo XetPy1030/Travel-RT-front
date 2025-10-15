@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { useNewsStore } from '@/stores/useNewsStores'
+import { useNewsStore } from '@stores/useNewsStores'
 import { onMounted, computed } from 'vue'
 import { processHtmlContent } from '@/utils/htmlUtils'
 import { formatDateRu } from '@/utils/date'
 import { MEDIA_BASE_URL } from '@/config'
+import BackButton from "@components/BackButton.vue";
+
 const route = useRoute()
 const newsStore = useNewsStore()
 
@@ -20,6 +22,7 @@ const processedContent = computed(() => {
 
 <template>
   <div class="news-detail">
+    <BackButton />
     <div v-if="newsStore.loading" class="news-detail__loading">
       Загрузка...
     </div>

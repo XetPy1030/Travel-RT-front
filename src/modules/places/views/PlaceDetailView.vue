@@ -9,6 +9,7 @@
     </div>
 
     <div v-else-if="currentPlace" class="content">
+      <BackButton />
       <div class="gallery">
         <Galleria 
           :value="currentPlace.images" 
@@ -65,6 +66,7 @@ import Tag from 'primevue/tag'
 import ProgressSpinner from 'primevue/progressspinner'
 import { processHtmlContent } from '@/utils/htmlUtils'
 import { MEDIA_BASE_URL } from '@/config'
+import BackButton from "@components/BackButton.vue";
 
 const route = useRoute()
 const { currentPlace, loading, error, fetchPlaceById } = usePlaces()
@@ -95,9 +97,11 @@ onMounted(() => {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  transition: padding 0.3s ease;
 }
 
-.loading, .error {
+.loading,
+.error {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,32 +114,52 @@ onMounted(() => {
 }
 
 .gallery {
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--surface-card, #fff);
+  transition: box-shadow 0.3s ease;
+}
+.gallery:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .main-image {
   width: 100%;
   max-height: 500px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.main-image:hover {
+  transform: scale(1.02);
 }
 
 .thumbnail-image {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .info {
-  padding: 1rem;
+  padding: 1.5rem;
+  background: var(--surface-card, #fff);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--surface-border, #e0e0e0);
+}
+
+.info h1 {
+  font-size: 1.8rem;
+  color: var(--text-color, #222);
+  margin-bottom: 1rem;
 }
 
 .location {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 .description {
@@ -144,14 +168,17 @@ onMounted(() => {
 
 .description h2 {
   margin-bottom: 1rem;
-  color: #333;
+  color: var(--primary-color, #1976D2);
+  font-size: 1.4rem;
 }
 
 .meta {
   display: flex;
-  gap: 2rem;
-  color: #666;
-  font-size: 0.9rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  color: var(--text-color-secondary, #666);
+  font-size: 0.95rem;
+  margin-top: 1rem;
 }
 
 .meta-item {
@@ -161,90 +188,112 @@ onMounted(() => {
 }
 
 .meta-item i {
-  color: #888;
+  color: var(--primary-color, #1976D2);
 }
 
-.description :deep(h1),
-.description :deep(h2),
-.description :deep(h3),
-.description :deep(h4),
-.description :deep(h5),
-.description :deep(h6) {
-  margin: 0 0 0.5em;
-  color: #333;
-  font-weight: 600;
+/* === 📱 Адаптив === */
+
+@media (max-width: 1200px) {
+  .place-detail {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+  .main-image {
+    max-height: 420px;
+  }
+  .thumbnail-image {
+    width: 48px;
+    height: 48px;
+  }
 }
 
-.description :deep(p) {
-  margin-bottom: 1em;
+@media (max-width: 960px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+  .gallery {
+    order: -1;
+  }
+  .info {
+    padding: 1.25rem;
+  }
+  .info h1 {
+    font-size: 1.6rem;
+  }
+  .main-image {
+    max-height: 380px;
+  }
 }
 
-.description :deep(ul),
-.description :deep(ol) {
-  margin: 1em 0;
-  padding-left: 2em;
+@media (max-width: 768px) {
+  .place-detail {
+    padding: 1rem;
+  }
+  .info {
+    padding: 1rem;
+  }
+  .info h1 {
+    font-size: 1.4rem;
+  }
+  .description h2 {
+    font-size: 1.2rem;
+  }
+  .meta {
+    gap: 1rem;
+  }
+  .main-image {
+    max-height: 320px;
+  }
 }
 
-.description :deep(li) {
-  margin-bottom: 0.5em;
+@media (max-width: 600px) {
+  .place-detail {
+    padding: 0.75rem;
+  }
+  .info {
+    border-radius: 8px;
+    padding: 0.75rem;
+  }
+  .info h1 {
+    font-size: 1.25rem;
+  }
+  .location {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .description {
+    margin: 1rem 0;
+  }
+  .main-image {
+    max-height: 280px;
+  }
+  .thumbnail-image {
+    width: 42px;
+    height: 42px;
+  }
+  .meta {
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+  }
+  .meta-item {
+    justify-content: flex-start;
+  }
 }
 
-.description :deep(a) {
-  color: #2196F3;
-  text-decoration: none;
-  transition: color 0.3s;
+@media (max-width: 400px) {
+  .place-detail {
+    padding: 0.5rem;
+  }
+  .info h1 {
+    font-size: 1.1rem;
+  }
+  .description h2 {
+    font-size: 1.1rem;
+  }
+  .main-image {
+    max-height: 220px;
+  }
 }
-
-.description :deep(a:hover) {
-  color: #1976D2;
-  text-decoration: underline;
-}
-
-.description :deep(img) {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 1em 0;
-}
-
-.description :deep(blockquote) {
-  border-left: 4px solid #2196F3;
-  padding-left: 1em;
-  margin: 1em 0;
-  color: #666;
-  font-style: italic;
-}
-
-.description :deep(code) {
-  background-color: #f5f5f5;
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-family: monospace;
-}
-
-.description :deep(pre) {
-  background-color: #f5f5f5;
-  padding: 1em;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin: 1em 0;
-}
-
-.description :deep(table) {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1em 0;
-}
-
-.description :deep(th),
-.description :deep(td) {
-  border: 1px solid #ddd;
-  padding: 0.5em;
-  text-align: left;
-}
-
-.description :deep(th) {
-  background-color: #f5f5f5;
-  font-weight: 600;
-}
-</style> 
+</style>

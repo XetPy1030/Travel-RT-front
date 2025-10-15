@@ -179,8 +179,4 @@ const navigateToDetail = () => {
 .location {
   margin-top: auto;
 }
-
-:deep(.p-button) {
-  margin-top: auto;
-}
-</style> 
+</style>

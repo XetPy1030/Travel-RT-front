@@ -1,6 +1,5 @@
-// stores/useNewsStore.ts
 import { defineStore } from 'pinia'
-import { useNews } from '@/modules/news/composables/useNews'
+import { useNews } from '@news/composables/useNews'
 
 export const useNewsStore = defineStore('news', () => {
     const {
