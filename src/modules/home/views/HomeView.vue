@@ -157,7 +157,7 @@ const { pending: homePending, error: homeError } = await useAsyncData('home-page
   ])
   return true
 }, {
-  server: true
+  server: false
 })
 
 const latestNews = computed<NewsItem[]>(() => apiNews.value.map(item => ({

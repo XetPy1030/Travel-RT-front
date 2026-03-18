@@ -4,8 +4,10 @@ import { createApiClient } from "../src/api";
 export default defineNuxtPlugin(() => {
   const runtimeConfig = useRuntimeConfig();
   const publicApiBaseUrl = runtimeConfig.public.apiBaseUrl ?? "";
-  const serverApiBaseUrl = runtimeConfig.apiBaseUrl || publicApiBaseUrl;
-  const basePath = import.meta.server ? serverApiBaseUrl : publicApiBaseUrl;
+  // TODO: посмотреть как работает
+  const basePath = import.meta.server
+    ? (runtimeConfig.apiBaseUrl || publicApiBaseUrl)
+    : publicApiBaseUrl;
 
   const appApi = createApiClient(basePath);
 
