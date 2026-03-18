@@ -17,11 +17,11 @@
               text
           />
         </div>
-        <div v-if="newsLoading" class="loading">
+        <div v-if="homePending || newsLoading" class="loading">
           <ProgressSpinner />
         </div>
-        <div v-else-if="newsError" class="error">
-          {{ newsError }}
+        <div v-else-if="newsErrorMessage" class="error">
+          {{ newsErrorMessage }}
         </div>
         <div v-else class="news-grid">
           <NewsCard
@@ -43,11 +43,11 @@
               text
           />
         </div>
-        <div v-if="placesLoading" class="loading">
+        <div v-if="homePending || placesLoading" class="loading">
           <ProgressSpinner />
         </div>
-        <div v-else-if="placesError" class="error">
-          {{ placesError }}
+        <div v-else-if="placesErrorMessage" class="error">
+          {{ placesErrorMessage }}
         </div>
         <div v-else class="places-grid">
           <PlaceCard
@@ -69,11 +69,11 @@
               text
           />
         </div>
-        <div v-if="routersLoading" class="loading">
+        <div v-if="homePending || routersLoading" class="loading">
           <ProgressSpinner />
         </div>
-        <div v-else-if="routersError" class="error">
-          {{ routersError }}
+        <div v-else-if="routersErrorMessage" class="error">
+          {{ routersErrorMessage }}
         </div>
         <div v-else class="routers-grid">
           <RouterCard
@@ -91,11 +91,11 @@
         </div>
 
         <!-- Главные партнеры -->
-        <div v-if="partnersLoading" class="loading">
+        <div v-if="homePending || partnersLoading" class="loading">
           <ProgressSpinner />
         </div>
-        <div v-else-if="partnersError" class="error">
-          {{ partnersError }}
+        <div v-else-if="partnersErrorMessage" class="error">
+          {{ partnersErrorMessage }}
         </div>
         <template v-else>
           <FeaturedPartners 
@@ -115,11 +115,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useNews } from '@news/composables/useNews.ts'
-import { usePlaces } from '@places/composables/usePlaces.ts'
-import { useRouters } from '@routers/composables/useRouters.ts'
-import { usePartners } from '@partners/composables/usePartners.ts'
+import { computed } from 'vue'
+import { useNews } from '@news/composables/useNews'
+import { usePlaces } from '@places/composables/usePlaces'
+import { useRouters } from '@routers/composables/useRouters'
+import { usePartners } from '@partners/composables/usePartners'
 import NewsCard from '@news/components/NewsCard.vue'
 import PlaceCard from '@places/components/PlaceCard.vue'
 import RouterCard from '@routers/components/RouterCard.vue'
@@ -148,29 +148,32 @@ const {
   fetchPartners 
 } = usePartners()
 
-const latestNews = ref<NewsItem[]>([])
-const popularPlaces = ref<PlaceList[]>([])
-const popularRouters = ref<RouterList[]>([])
-
-onMounted(async () => {
+const { pending: homePending, error: homeError } = await useAsyncData('home-page', async () => {
   await Promise.all([
     fetchNews(3, 1),
     fetchPlaces(3, 1),
     fetchRouters(3, 1),
     fetchPartners()
   ])
+  return true
+}, {
+  server: true
+})
 
-  latestNews.value = apiNews.value.map(item => ({
+const latestNews = computed<NewsItem[]>(() => apiNews.value.map(item => ({
     id: item.id,
     title: item.title,
     description: item.description,
     imageUrl: item.image || undefined,
     date: item.created_at
-  }))
+  })))
 
-  popularPlaces.value = places.value
-  popularRouters.value = routers.value
-})
+const popularPlaces = computed<PlaceList[]>(() => places.value)
+const popularRouters = computed<RouterList[]>(() => routers.value)
+const newsErrorMessage = computed(() => homeError.value?.message || newsError.value?.message || '')
+const placesErrorMessage = computed(() => homeError.value?.message || placesError.value?.message || '')
+const routersErrorMessage = computed(() => homeError.value?.message || routersError.value?.message || '')
+const partnersErrorMessage = computed(() => homeError.value?.message || partnersError.value?.message || '')
 </script>
 
 <style scoped>

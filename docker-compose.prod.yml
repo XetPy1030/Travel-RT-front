@@ -6,6 +6,23 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
+      - NUXT_PUBLIC_API_BASE_URL=${NUXT_PUBLIC_API_BASE_URL}
+      - NUXT_PUBLIC_MEDIA_BASE_URL=${NUXT_PUBLIC_MEDIA_BASE_URL}
+      - NUXT_API_BASE_URL=${NUXT_API_BASE_URL}
+      - NITRO_HOST=0.0.0.0
+      - NITRO_PORT=3000
+    restart: unless-stopped
+    networks:
+      - travel-rt-network
+  frontend-nginx:
+    container_name: travel-front-nginx
+    image: nginx:alpine
+    depends_on:
+      - frontend
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
     restart: unless-stopped
     networks:
       - travel-rt-network

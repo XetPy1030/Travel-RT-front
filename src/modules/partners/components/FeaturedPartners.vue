@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import type { Partner } from '@/modules/partners'
+import type { Partner } from '@partners/composables/usePartners'
 
 defineProps<{ partners: Partner[] }>()
 

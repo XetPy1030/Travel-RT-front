@@ -65,15 +65,16 @@ import Galleria from 'primevue/galleria'
 import Tag from 'primevue/tag'
 import ProgressSpinner from 'primevue/progressspinner'
 import { processHtmlContent } from '@/utils/htmlUtils'
-import { MEDIA_BASE_URL } from '@/config'
+import { useAppRuntimeConfig } from '@/config'
 import BackButton from "@components/BackButton.vue";
 
 const route = useRoute()
 const { currentPlace, loading, error, fetchPlaceById } = usePlaces()
+const { mediaBaseUrl } = useAppRuntimeConfig()
 
 const processedDescription = computed(() => {
   if (!currentPlace.value?.full_description) return ''
-  return processHtmlContent(currentPlace.value.full_description, MEDIA_BASE_URL)
+  return processHtmlContent(currentPlace.value.full_description, mediaBaseUrl)
 })
 
 const formatDate = (dateString: string) => {

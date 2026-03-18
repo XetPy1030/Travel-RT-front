@@ -1,9 +1,9 @@
 // modules/news/composables/useNews.ts
 import { ref, computed } from 'vue'
-import { $api } from '@/api'
 import type { PaginatedNewsList, News } from "@/api/generated";
 
 export const useNews = () => {
+    const { $api } = useNuxtApp()
     const news = ref<PaginatedNewsList>({
         count: 0,
         results: [],

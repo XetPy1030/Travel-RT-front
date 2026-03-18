@@ -73,13 +73,14 @@ import Tag from 'primevue/tag'
 import ProgressSpinner from 'primevue/progressspinner'
 import Message from 'primevue/message'
 import { useRouters } from '../composables/useRouters'
-import type {ApiRoutersListDifficultyEnum} from '@/api/generated'
+import type { RoutersListDifficultyEnum } from '@/api/generated'
 import { processHtmlContent } from '@/utils/htmlUtils'
-import {MEDIA_BASE_URL} from '@/config'
+import { useAppRuntimeConfig } from '@/config'
 import BackButton from "@components/BackButton.vue";
 
 const route = useRoute()
 const { currentRouter, loading, error, fetchRouterById } = useRouters()
+const { mediaBaseUrl } = useAppRuntimeConfig()
 
 const locationName = computed(() => {
   if (!currentRouter.value) return ''
@@ -88,10 +89,10 @@ const locationName = computed(() => {
 
 const processedDescription = computed(() => {
   if (!currentRouter.value?.full_description) return ''
-  return processHtmlContent(currentRouter.value.full_description, MEDIA_BASE_URL)
+  return processHtmlContent(currentRouter.value.full_description, mediaBaseUrl)
 })
 
-const getDifficultyLabel = (difficulty: ApiRoutersListDifficultyEnum) => {
+const getDifficultyLabel = (difficulty: RoutersListDifficultyEnum) => {
   switch (difficulty) {
     case 'easy':
       return 'Легкий'
@@ -104,7 +105,7 @@ const getDifficultyLabel = (difficulty: ApiRoutersListDifficultyEnum) => {
   }
 }
 
-const getDifficultySeverity = (difficulty: ApiRoutersListDifficultyEnum) => {
+const getDifficultySeverity = (difficulty: RoutersListDifficultyEnum) => {
   switch (difficulty) {
     case 'easy':
       return 'success'

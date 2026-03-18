@@ -1,12 +1,12 @@
 # Travell-RT Frontend
 
-Frontend приложение для Travell-RT, построенное на Vue 3, TypeScript и Vite.
+Frontend приложение для Travell-RT на Nuxt 3 (гибридный рендеринг: SSR для главной, CSR для остальных страниц).
 
 ## 🚀 Технологии
 
 - Vue 3
 - TypeScript
-- Vite
+- Nuxt 3
 - Yarn (менеджер пакетов)
 
 ## 📋 Предварительные требования
@@ -48,9 +48,26 @@ yarn build
 yarn preview
 ```
 
+Запуск production-сервера после сборки:
+```bash
+yarn start
+```
+
+## 🌐 Рендеринг
+
+- `"/"` рендерится на сервере (SSR + гидратация).
+- Остальные маршруты на этапе 1 работают как CSR через `routeRules`.
+
+## 🧭 План фазы 2
+
+1. Включать SSR по группам SEO-страниц: `news`, `places`, `routers`.
+2. Перенести data-fetch этих страниц на `useAsyncData` с устранением дублей запросов.
+3. Добавить кеширование SSR-ответов для высокочастотных маршрутов.
+4. Подключить метрики TTFB и ошибки гидратации.
+
 ## 📚 Дополнительная информация
 
 - [Vue 3 Documentation](https://vuejs.org/)
 - [TypeScript Documentation](https://www.typescriptlang.org/)
-- [Vite Documentation](https://vitejs.dev/)
+- [Nuxt Documentation](https://nuxt.com/docs)
 - [OpenAPI Generator Documentation](https://openapi-generator.tech/)

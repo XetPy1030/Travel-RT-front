@@ -10,12 +10,17 @@ COPY . .
 
 RUN yarn build
 
-FROM nginx:alpine
+FROM node:18-alpine
 
-COPY --from=0 /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+ENV NODE_ENV=production
+ENV NITRO_HOST=0.0.0.0
+ENV NITRO_PORT=3000
 
-EXPOSE 80
+COPY --from=0 /app/.output ./.output
+COPY --from=0 /app/package.json ./package.json
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["node", ".output/server/index.mjs"]

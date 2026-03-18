@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Travel API
- * API for Travel app
+ * API для приложения путешествий
  *
  * The version of the OpenAPI document: 1.0.0
  * 
@@ -117,7 +117,19 @@ export interface News {
      * @type {string}
      * @memberof News
      */
+    'published_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof News
+     */
     'created_at': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof News
+     */
+    'created_by': number | null;
 }
 /**
  * 
@@ -838,20 +850,20 @@ export interface UserCreate {
 }
 
 /**
- * ApiApi - axios parameter creator
+ * AccountsApi - axios parameter creator
  * @export
  */
-export const ApiApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AccountsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Logout a user by blacklisting their refresh token
+         * Выход пользователя из системы путем блокировки токена обновления
          * @param {Logout} logout 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsLogoutCreate: async (logout: Logout, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsLogoutCreate: async (logout: Logout, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'logout' is not null or undefined
-            assertParamExists('apiAccountsLogoutCreate', 'logout', logout)
+            assertParamExists('accountsLogoutCreate', 'logout', logout)
             const localVarPath = `/api/accounts/logout/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -888,7 +900,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsProfilePartialUpdate: async (patchedUser?: PatchedUser, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsProfilePartialUpdate: async (patchedUser?: PatchedUser, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/accounts/profile/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -924,7 +936,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsProfileRetrieve: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsProfileRetrieve: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/accounts/profile/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -958,7 +970,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsProfileUpdate: async (user?: User, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsProfileUpdate: async (user?: User, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/accounts/profile/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -990,14 +1002,14 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Create a new user account
+         * Создание нового пользователя
          * @param {UserCreate} userCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsRegisterCreate: async (userCreate: UserCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsRegisterCreate: async (userCreate: UserCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userCreate' is not null or undefined
-            assertParamExists('apiAccountsRegisterCreate', 'userCreate', userCreate)
+            assertParamExists('accountsRegisterCreate', 'userCreate', userCreate)
             const localVarPath = `/api/accounts/register/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1034,9 +1046,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsTokenCreate: async (tokenObtainPair: TokenObtainPair, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsTokenCreate: async (tokenObtainPair: TokenObtainPair, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokenObtainPair' is not null or undefined
-            assertParamExists('apiAccountsTokenCreate', 'tokenObtainPair', tokenObtainPair)
+            assertParamExists('accountsTokenCreate', 'tokenObtainPair', tokenObtainPair)
             const localVarPath = `/api/accounts/token/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1069,9 +1081,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsTokenRefreshCreate: async (tokenRefresh: TokenRefresh, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsTokenRefreshCreate: async (tokenRefresh: TokenRefresh, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokenRefresh' is not null or undefined
-            assertParamExists('apiAccountsTokenRefreshCreate', 'tokenRefresh', tokenRefresh)
+            assertParamExists('accountsTokenRefreshCreate', 'tokenRefresh', tokenRefresh)
             const localVarPath = `/api/accounts/token/refresh/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1104,9 +1116,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsTokenVerifyCreate: async (tokenVerify: TokenVerify, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsTokenVerifyCreate: async (tokenVerify: TokenVerify, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokenVerify' is not null or undefined
-            assertParamExists('apiAccountsTokenVerifyCreate', 'tokenVerify', tokenVerify)
+            assertParamExists('accountsTokenVerifyCreate', 'tokenVerify', tokenVerify)
             const localVarPath = `/api/accounts/token/verify/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1133,6 +1145,475 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+    }
+};
+
+/**
+ * AccountsApi - functional programming interface
+ * @export
+ */
+export const AccountsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AccountsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Выход пользователя из системы путем блокировки токена обновления
+         * @param {Logout} logout 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsLogoutCreate(logout: Logout, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsLogoutCreate(logout, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsLogoutCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {PatchedUser} [patchedUser] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsProfilePartialUpdate(patchedUser?: PatchedUser, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsProfilePartialUpdate(patchedUser, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsProfilePartialUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsProfileRetrieve(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsProfileRetrieve(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsProfileRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {User} [user] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsProfileUpdate(user?: User, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsProfileUpdate(user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsProfileUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Создание нового пользователя
+         * @param {UserCreate} userCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsRegisterCreate(userCreate: UserCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCreate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsRegisterCreate(userCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsRegisterCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
+         * @param {TokenObtainPair} tokenObtainPair 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsTokenCreate(tokenObtainPair: TokenObtainPair, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenObtainPair>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsTokenCreate(tokenObtainPair, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsTokenCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
+         * @param {TokenRefresh} tokenRefresh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsTokenRefreshCreate(tokenRefresh: TokenRefresh, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenRefresh>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsTokenRefreshCreate(tokenRefresh, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsTokenRefreshCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
+         * @param {TokenVerify} tokenVerify 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsTokenVerifyCreate(tokenVerify: TokenVerify, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenVerify>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsTokenVerifyCreate(tokenVerify, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountsApi.accountsTokenVerifyCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AccountsApi - factory interface
+ * @export
+ */
+export const AccountsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AccountsApiFp(configuration)
+    return {
+        /**
+         * Выход пользователя из системы путем блокировки токена обновления
+         * @param {AccountsApiAccountsLogoutCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsLogoutCreate(requestParameters: AccountsApiAccountsLogoutCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.accountsLogoutCreate(requestParameters.logout, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {AccountsApiAccountsProfilePartialUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsProfilePartialUpdate(requestParameters: AccountsApiAccountsProfilePartialUpdateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.accountsProfilePartialUpdate(requestParameters.patchedUser, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsProfileRetrieve(options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.accountsProfileRetrieve(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {AccountsApiAccountsProfileUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsProfileUpdate(requestParameters: AccountsApiAccountsProfileUpdateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.accountsProfileUpdate(requestParameters.user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Создание нового пользователя
+         * @param {AccountsApiAccountsRegisterCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsRegisterCreate(requestParameters: AccountsApiAccountsRegisterCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserCreate> {
+            return localVarFp.accountsRegisterCreate(requestParameters.userCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
+         * @param {AccountsApiAccountsTokenCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsTokenCreate(requestParameters: AccountsApiAccountsTokenCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenObtainPair> {
+            return localVarFp.accountsTokenCreate(requestParameters.tokenObtainPair, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
+         * @param {AccountsApiAccountsTokenRefreshCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsTokenRefreshCreate(requestParameters: AccountsApiAccountsTokenRefreshCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenRefresh> {
+            return localVarFp.accountsTokenRefreshCreate(requestParameters.tokenRefresh, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
+         * @param {AccountsApiAccountsTokenVerifyCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsTokenVerifyCreate(requestParameters: AccountsApiAccountsTokenVerifyCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenVerify> {
+            return localVarFp.accountsTokenVerifyCreate(requestParameters.tokenVerify, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AccountsApi - interface
+ * @export
+ * @interface AccountsApi
+ */
+export interface AccountsApiInterface {
+    /**
+     * Выход пользователя из системы путем блокировки токена обновления
+     * @param {AccountsApiAccountsLogoutCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsLogoutCreate(requestParameters: AccountsApiAccountsLogoutCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @param {AccountsApiAccountsProfilePartialUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsProfilePartialUpdate(requestParameters?: AccountsApiAccountsProfilePartialUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<User>;
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsProfileRetrieve(options?: RawAxiosRequestConfig): AxiosPromise<User>;
+
+    /**
+     * 
+     * @param {AccountsApiAccountsProfileUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsProfileUpdate(requestParameters?: AccountsApiAccountsProfileUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<User>;
+
+    /**
+     * Создание нового пользователя
+     * @param {AccountsApiAccountsRegisterCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsRegisterCreate(requestParameters: AccountsApiAccountsRegisterCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserCreate>;
+
+    /**
+     * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
+     * @param {AccountsApiAccountsTokenCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsTokenCreate(requestParameters: AccountsApiAccountsTokenCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenObtainPair>;
+
+    /**
+     * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
+     * @param {AccountsApiAccountsTokenRefreshCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsTokenRefreshCreate(requestParameters: AccountsApiAccountsTokenRefreshCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenRefresh>;
+
+    /**
+     * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
+     * @param {AccountsApiAccountsTokenVerifyCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    accountsTokenVerifyCreate(requestParameters: AccountsApiAccountsTokenVerifyCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenVerify>;
+
+}
+
+/**
+ * Request parameters for accountsLogoutCreate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsLogoutCreateRequest
+ */
+export interface AccountsApiAccountsLogoutCreateRequest {
+    /**
+     * 
+     * @type {Logout}
+     * @memberof AccountsApiAccountsLogoutCreate
+     */
+    readonly logout: Logout
+}
+
+/**
+ * Request parameters for accountsProfilePartialUpdate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsProfilePartialUpdateRequest
+ */
+export interface AccountsApiAccountsProfilePartialUpdateRequest {
+    /**
+     * 
+     * @type {PatchedUser}
+     * @memberof AccountsApiAccountsProfilePartialUpdate
+     */
+    readonly patchedUser?: PatchedUser
+}
+
+/**
+ * Request parameters for accountsProfileUpdate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsProfileUpdateRequest
+ */
+export interface AccountsApiAccountsProfileUpdateRequest {
+    /**
+     * 
+     * @type {User}
+     * @memberof AccountsApiAccountsProfileUpdate
+     */
+    readonly user?: User
+}
+
+/**
+ * Request parameters for accountsRegisterCreate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsRegisterCreateRequest
+ */
+export interface AccountsApiAccountsRegisterCreateRequest {
+    /**
+     * 
+     * @type {UserCreate}
+     * @memberof AccountsApiAccountsRegisterCreate
+     */
+    readonly userCreate: UserCreate
+}
+
+/**
+ * Request parameters for accountsTokenCreate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsTokenCreateRequest
+ */
+export interface AccountsApiAccountsTokenCreateRequest {
+    /**
+     * 
+     * @type {TokenObtainPair}
+     * @memberof AccountsApiAccountsTokenCreate
+     */
+    readonly tokenObtainPair: TokenObtainPair
+}
+
+/**
+ * Request parameters for accountsTokenRefreshCreate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsTokenRefreshCreateRequest
+ */
+export interface AccountsApiAccountsTokenRefreshCreateRequest {
+    /**
+     * 
+     * @type {TokenRefresh}
+     * @memberof AccountsApiAccountsTokenRefreshCreate
+     */
+    readonly tokenRefresh: TokenRefresh
+}
+
+/**
+ * Request parameters for accountsTokenVerifyCreate operation in AccountsApi.
+ * @export
+ * @interface AccountsApiAccountsTokenVerifyCreateRequest
+ */
+export interface AccountsApiAccountsTokenVerifyCreateRequest {
+    /**
+     * 
+     * @type {TokenVerify}
+     * @memberof AccountsApiAccountsTokenVerifyCreate
+     */
+    readonly tokenVerify: TokenVerify
+}
+
+/**
+ * AccountsApi - object-oriented interface
+ * @export
+ * @class AccountsApi
+ * @extends {BaseAPI}
+ */
+export class AccountsApi extends BaseAPI implements AccountsApiInterface {
+    /**
+     * Выход пользователя из системы путем блокировки токена обновления
+     * @param {AccountsApiAccountsLogoutCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsLogoutCreate(requestParameters: AccountsApiAccountsLogoutCreateRequest, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsLogoutCreate(requestParameters.logout, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {AccountsApiAccountsProfilePartialUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsProfilePartialUpdate(requestParameters: AccountsApiAccountsProfilePartialUpdateRequest = {}, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsProfilePartialUpdate(requestParameters.patchedUser, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsProfileRetrieve(options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsProfileRetrieve(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {AccountsApiAccountsProfileUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsProfileUpdate(requestParameters: AccountsApiAccountsProfileUpdateRequest = {}, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsProfileUpdate(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Создание нового пользователя
+     * @param {AccountsApiAccountsRegisterCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsRegisterCreate(requestParameters: AccountsApiAccountsRegisterCreateRequest, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsRegisterCreate(requestParameters.userCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
+     * @param {AccountsApiAccountsTokenCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsTokenCreate(requestParameters: AccountsApiAccountsTokenCreateRequest, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsTokenCreate(requestParameters.tokenObtainPair, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
+     * @param {AccountsApiAccountsTokenRefreshCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsTokenRefreshCreate(requestParameters: AccountsApiAccountsTokenRefreshCreateRequest, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsTokenRefreshCreate(requestParameters.tokenRefresh, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
+     * @param {AccountsApiAccountsTokenVerifyCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApi
+     */
+    public accountsTokenVerifyCreate(requestParameters: AccountsApiAccountsTokenVerifyCreateRequest, options?: RawAxiosRequestConfig) {
+        return AccountsApiFp(this.configuration).accountsTokenVerifyCreate(requestParameters.tokenVerify, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * LocationsApi - axios parameter creator
+ * @export
+ */
+export const LocationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
         /**
          * API endpoint для чтения данных о районах
          * @param {string} [name] 
@@ -1143,7 +1624,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsDistrictsList: async (name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        locationsDistrictsList: async (name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/locations/districts/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1197,9 +1678,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsDistrictsRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        locationsDistrictsRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiLocationsDistrictsRetrieve', 'id', id)
+            assertParamExists('locationsDistrictsRetrieve', 'id', id)
             const localVarPath = `/api/locations/districts/{id}/`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1236,11 +1717,11 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {number} [page] A page number within the paginated result set.
          * @param {number} [pageSize] Number of results to return per page.
          * @param {string} [search] A search term.
-         * @param {ApiLocationsSettlementsListTypeEnum} [type] * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
+         * @param {LocationsSettlementsListTypeEnum} [type] * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsSettlementsList: async (district?: number, name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, type?: ApiLocationsSettlementsListTypeEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        locationsSettlementsList: async (district?: number, name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, type?: LocationsSettlementsListTypeEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/locations/settlements/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1302,9 +1783,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLocationsSettlementsRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        locationsSettlementsRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiLocationsSettlementsRetrieve', 'id', id)
+            assertParamExists('locationsSettlementsRetrieve', 'id', id)
             const localVarPath = `/api/locations/settlements/{id}/`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1333,6 +1814,363 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+    }
+};
+
+/**
+ * LocationsApi - functional programming interface
+ * @export
+ */
+export const LocationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LocationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * API endpoint для чтения данных о районах
+         * @param {string} [name] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsDistrictsList(name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedDistrictList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsDistrictsList(name, ordering, page, pageSize, search, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsDistrictsList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * API endpoint для чтения данных о районах
+         * @param {number} id A unique integer value identifying this Район.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsDistrictsRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<District>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsDistrictsRetrieve(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsDistrictsRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * API endpoint для чтения данных о населенных пунктах
+         * @param {number} [district] 
+         * @param {string} [name] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {LocationsSettlementsListTypeEnum} [type] * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsSettlementsList(district?: number, name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, type?: LocationsSettlementsListTypeEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedSettlementList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsSettlementsList(district, name, ordering, page, pageSize, search, type, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsSettlementsList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * API endpoint для чтения данных о населенных пунктах
+         * @param {number} id A unique integer value identifying this Населённый пункт.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsSettlementsRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Settlement>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsSettlementsRetrieve(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsSettlementsRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * LocationsApi - factory interface
+ * @export
+ */
+export const LocationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LocationsApiFp(configuration)
+    return {
+        /**
+         * API endpoint для чтения данных о районах
+         * @param {LocationsApiLocationsDistrictsListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsDistrictsList(requestParameters: LocationsApiLocationsDistrictsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedDistrictList> {
+            return localVarFp.locationsDistrictsList(requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * API endpoint для чтения данных о районах
+         * @param {LocationsApiLocationsDistrictsRetrieveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsDistrictsRetrieve(requestParameters: LocationsApiLocationsDistrictsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<District> {
+            return localVarFp.locationsDistrictsRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * API endpoint для чтения данных о населенных пунктах
+         * @param {LocationsApiLocationsSettlementsListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsSettlementsList(requestParameters: LocationsApiLocationsSettlementsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedSettlementList> {
+            return localVarFp.locationsSettlementsList(requestParameters.district, requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * API endpoint для чтения данных о населенных пунктах
+         * @param {LocationsApiLocationsSettlementsRetrieveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsSettlementsRetrieve(requestParameters: LocationsApiLocationsSettlementsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<Settlement> {
+            return localVarFp.locationsSettlementsRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * LocationsApi - interface
+ * @export
+ * @interface LocationsApi
+ */
+export interface LocationsApiInterface {
+    /**
+     * API endpoint для чтения данных о районах
+     * @param {LocationsApiLocationsDistrictsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApiInterface
+     */
+    locationsDistrictsList(requestParameters?: LocationsApiLocationsDistrictsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedDistrictList>;
+
+    /**
+     * API endpoint для чтения данных о районах
+     * @param {LocationsApiLocationsDistrictsRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApiInterface
+     */
+    locationsDistrictsRetrieve(requestParameters: LocationsApiLocationsDistrictsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<District>;
+
+    /**
+     * API endpoint для чтения данных о населенных пунктах
+     * @param {LocationsApiLocationsSettlementsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApiInterface
+     */
+    locationsSettlementsList(requestParameters?: LocationsApiLocationsSettlementsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedSettlementList>;
+
+    /**
+     * API endpoint для чтения данных о населенных пунктах
+     * @param {LocationsApiLocationsSettlementsRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApiInterface
+     */
+    locationsSettlementsRetrieve(requestParameters: LocationsApiLocationsSettlementsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<Settlement>;
+
+}
+
+/**
+ * Request parameters for locationsDistrictsList operation in LocationsApi.
+ * @export
+ * @interface LocationsApiLocationsDistrictsListRequest
+ */
+export interface LocationsApiLocationsDistrictsListRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LocationsApiLocationsDistrictsList
+     */
+    readonly name?: string
+
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof LocationsApiLocationsDistrictsList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof LocationsApiLocationsDistrictsList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof LocationsApiLocationsDistrictsList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof LocationsApiLocationsDistrictsList
+     */
+    readonly search?: string
+}
+
+/**
+ * Request parameters for locationsDistrictsRetrieve operation in LocationsApi.
+ * @export
+ * @interface LocationsApiLocationsDistrictsRetrieveRequest
+ */
+export interface LocationsApiLocationsDistrictsRetrieveRequest {
+    /**
+     * A unique integer value identifying this Район.
+     * @type {number}
+     * @memberof LocationsApiLocationsDistrictsRetrieve
+     */
+    readonly id: number
+}
+
+/**
+ * Request parameters for locationsSettlementsList operation in LocationsApi.
+ * @export
+ * @interface LocationsApiLocationsSettlementsListRequest
+ */
+export interface LocationsApiLocationsSettlementsListRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly district?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly name?: string
+
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly search?: string
+
+    /**
+     * * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
+     * @type {'city' | 'town' | 'village' | 'village_hamlet'}
+     * @memberof LocationsApiLocationsSettlementsList
+     */
+    readonly type?: LocationsSettlementsListTypeEnum
+}
+
+/**
+ * Request parameters for locationsSettlementsRetrieve operation in LocationsApi.
+ * @export
+ * @interface LocationsApiLocationsSettlementsRetrieveRequest
+ */
+export interface LocationsApiLocationsSettlementsRetrieveRequest {
+    /**
+     * A unique integer value identifying this Населённый пункт.
+     * @type {number}
+     * @memberof LocationsApiLocationsSettlementsRetrieve
+     */
+    readonly id: number
+}
+
+/**
+ * LocationsApi - object-oriented interface
+ * @export
+ * @class LocationsApi
+ * @extends {BaseAPI}
+ */
+export class LocationsApi extends BaseAPI implements LocationsApiInterface {
+    /**
+     * API endpoint для чтения данных о районах
+     * @param {LocationsApiLocationsDistrictsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApi
+     */
+    public locationsDistrictsList(requestParameters: LocationsApiLocationsDistrictsListRequest = {}, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsDistrictsList(requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * API endpoint для чтения данных о районах
+     * @param {LocationsApiLocationsDistrictsRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApi
+     */
+    public locationsDistrictsRetrieve(requestParameters: LocationsApiLocationsDistrictsRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsDistrictsRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * API endpoint для чтения данных о населенных пунктах
+     * @param {LocationsApiLocationsSettlementsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApi
+     */
+    public locationsSettlementsList(requestParameters: LocationsApiLocationsSettlementsListRequest = {}, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsSettlementsList(requestParameters.district, requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * API endpoint для чтения данных о населенных пунктах
+     * @param {LocationsApiLocationsSettlementsRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApi
+     */
+    public locationsSettlementsRetrieve(requestParameters: LocationsApiLocationsSettlementsRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsSettlementsRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const LocationsSettlementsListTypeEnum = {
+    City: 'city',
+    Town: 'town',
+    Village: 'village',
+    VillageHamlet: 'village_hamlet'
+} as const;
+export type LocationsSettlementsListTypeEnum = typeof LocationsSettlementsListTypeEnum[keyof typeof LocationsSettlementsListTypeEnum];
+
+
+/**
+ * NewsApi - axios parameter creator
+ * @export
+ */
+export const NewsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
         /**
          * 
          * @param {string} [ordering] Which field to use when ordering the results.
@@ -1342,7 +2180,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiNewsList: async (ordering?: string, page?: number, pageSize?: number, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        newsList: async (ordering?: string, page?: number, pageSize?: number, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/news/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1388,13 +2226,42 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        newsParserCreate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/news/parser/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} id A unique integer value identifying this Новость.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiNewsRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        newsRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiNewsRetrieve', 'id', id)
+            assertParamExists('newsRetrieve', 'id', id)
             const localVarPath = `/api/news/{id}/`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1423,6 +2290,224 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+    }
+};
+
+/**
+ * NewsApi - functional programming interface
+ * @export
+ */
+export const NewsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NewsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async newsList(ordering?: string, page?: number, pageSize?: number, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedNewsList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.newsList(ordering, page, pageSize, search, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NewsApi.newsList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async newsParserCreate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.newsParserCreate(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NewsApi.newsParserCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} id A unique integer value identifying this Новость.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async newsRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<News>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.newsRetrieve(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NewsApi.newsRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * NewsApi - factory interface
+ * @export
+ */
+export const NewsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NewsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {NewsApiNewsListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        newsList(requestParameters: NewsApiNewsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedNewsList> {
+            return localVarFp.newsList(requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        newsParserCreate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.newsParserCreate(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {NewsApiNewsRetrieveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        newsRetrieve(requestParameters: NewsApiNewsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<News> {
+            return localVarFp.newsRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * NewsApi - interface
+ * @export
+ * @interface NewsApi
+ */
+export interface NewsApiInterface {
+    /**
+     * 
+     * @param {NewsApiNewsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NewsApiInterface
+     */
+    newsList(requestParameters?: NewsApiNewsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedNewsList>;
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NewsApiInterface
+     */
+    newsParserCreate(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @param {NewsApiNewsRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NewsApiInterface
+     */
+    newsRetrieve(requestParameters: NewsApiNewsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<News>;
+
+}
+
+/**
+ * Request parameters for newsList operation in NewsApi.
+ * @export
+ * @interface NewsApiNewsListRequest
+ */
+export interface NewsApiNewsListRequest {
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof NewsApiNewsList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof NewsApiNewsList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof NewsApiNewsList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof NewsApiNewsList
+     */
+    readonly search?: string
+}
+
+/**
+ * Request parameters for newsRetrieve operation in NewsApi.
+ * @export
+ * @interface NewsApiNewsRetrieveRequest
+ */
+export interface NewsApiNewsRetrieveRequest {
+    /**
+     * A unique integer value identifying this Новость.
+     * @type {number}
+     * @memberof NewsApiNewsRetrieve
+     */
+    readonly id: number
+}
+
+/**
+ * NewsApi - object-oriented interface
+ * @export
+ * @class NewsApi
+ * @extends {BaseAPI}
+ */
+export class NewsApi extends BaseAPI implements NewsApiInterface {
+    /**
+     * 
+     * @param {NewsApiNewsListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NewsApi
+     */
+    public newsList(requestParameters: NewsApiNewsListRequest = {}, options?: RawAxiosRequestConfig) {
+        return NewsApiFp(this.configuration).newsList(requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NewsApi
+     */
+    public newsParserCreate(options?: RawAxiosRequestConfig) {
+        return NewsApiFp(this.configuration).newsParserCreate(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {NewsApiNewsRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NewsApi
+     */
+    public newsRetrieve(requestParameters: NewsApiNewsRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return NewsApiFp(this.configuration).newsRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PlacesApi - axios parameter creator
+ * @export
+ */
+export const PlacesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
         /**
          * 
          * @param {number} [district] 
@@ -1434,7 +2519,7 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        placesList: async (district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/places/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1492,9 +2577,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPlacesRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        placesRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiPlacesRetrieve', 'id', id)
+            assertParamExists('placesRetrieve', 'id', id)
             const localVarPath = `/api/places/{id}/`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1523,9 +2608,18 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+    }
+};
+
+/**
+ * PlacesApi - functional programming interface
+ * @export
+ */
+export const PlacesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PlacesApiAxiosParamCreator(configuration)
+    return {
         /**
          * 
-         * @param {ApiRoutersListDifficultyEnum} [difficulty] Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
          * @param {number} [district] 
          * @param {string} [ordering] Which field to use when ordering the results.
          * @param {number} [page] A page number within the paginated result set.
@@ -1535,7 +2629,195 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoutersList: async (difficulty?: ApiRoutersListDifficultyEnum, district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        async placesList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedPlaceListList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.placesList(district, ordering, page, pageSize, search, settlement, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlacesApi.placesList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} id A unique integer value identifying this Интересное место.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async placesRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlaceDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.placesRetrieve(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlacesApi.placesRetrieve']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PlacesApi - factory interface
+ * @export
+ */
+export const PlacesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PlacesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {PlacesApiPlacesListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        placesList(requestParameters: PlacesApiPlacesListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList> {
+            return localVarFp.placesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlacesApiPlacesRetrieveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        placesRetrieve(requestParameters: PlacesApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail> {
+            return localVarFp.placesRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PlacesApi - interface
+ * @export
+ * @interface PlacesApi
+ */
+export interface PlacesApiInterface {
+    /**
+     * 
+     * @param {PlacesApiPlacesListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlacesApiInterface
+     */
+    placesList(requestParameters?: PlacesApiPlacesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList>;
+
+    /**
+     * 
+     * @param {PlacesApiPlacesRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlacesApiInterface
+     */
+    placesRetrieve(requestParameters: PlacesApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail>;
+
+}
+
+/**
+ * Request parameters for placesList operation in PlacesApi.
+ * @export
+ * @interface PlacesApiPlacesListRequest
+ */
+export interface PlacesApiPlacesListRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof PlacesApiPlacesList
+     */
+    readonly district?: number
+
+    /**
+     * Which field to use when ordering the results.
+     * @type {string}
+     * @memberof PlacesApiPlacesList
+     */
+    readonly ordering?: string
+
+    /**
+     * A page number within the paginated result set.
+     * @type {number}
+     * @memberof PlacesApiPlacesList
+     */
+    readonly page?: number
+
+    /**
+     * Number of results to return per page.
+     * @type {number}
+     * @memberof PlacesApiPlacesList
+     */
+    readonly pageSize?: number
+
+    /**
+     * A search term.
+     * @type {string}
+     * @memberof PlacesApiPlacesList
+     */
+    readonly search?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof PlacesApiPlacesList
+     */
+    readonly settlement?: number
+}
+
+/**
+ * Request parameters for placesRetrieve operation in PlacesApi.
+ * @export
+ * @interface PlacesApiPlacesRetrieveRequest
+ */
+export interface PlacesApiPlacesRetrieveRequest {
+    /**
+     * A unique integer value identifying this Интересное место.
+     * @type {number}
+     * @memberof PlacesApiPlacesRetrieve
+     */
+    readonly id: number
+}
+
+/**
+ * PlacesApi - object-oriented interface
+ * @export
+ * @class PlacesApi
+ * @extends {BaseAPI}
+ */
+export class PlacesApi extends BaseAPI implements PlacesApiInterface {
+    /**
+     * 
+     * @param {PlacesApiPlacesListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlacesApi
+     */
+    public placesList(requestParameters: PlacesApiPlacesListRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlacesApiFp(this.configuration).placesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlacesApiPlacesRetrieveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlacesApi
+     */
+    public placesRetrieve(requestParameters: PlacesApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return PlacesApiFp(this.configuration).placesRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RoutersApi - axios parameter creator
+ * @export
+ */
+export const RoutersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {RoutersListDifficultyEnum} [difficulty] Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
+         * @param {number} [district] 
+         * @param {string} [ordering] Which field to use when ordering the results.
+         * @param {number} [page] A page number within the paginated result set.
+         * @param {number} [pageSize] Number of results to return per page.
+         * @param {string} [search] A search term.
+         * @param {number} [settlement] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        routersList: async (difficulty?: RoutersListDifficultyEnum, district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/routers/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1597,9 +2879,9 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiRoutersRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        routersRetrieve: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiRoutersRetrieve', 'id', id)
+            assertParamExists('routersRetrieve', 'id', id)
             const localVarPath = `/api/routers/{id}/`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1632,194 +2914,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 };
 
 /**
- * ApiApi - functional programming interface
+ * RoutersApi - functional programming interface
  * @export
  */
-export const ApiApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ApiApiAxiosParamCreator(configuration)
+export const RoutersApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoutersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Logout a user by blacklisting their refresh token
-         * @param {Logout} logout 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsLogoutCreate(logout: Logout, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsLogoutCreate(logout, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsLogoutCreate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * 
-         * @param {PatchedUser} [patchedUser] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsProfilePartialUpdate(patchedUser?: PatchedUser, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsProfilePartialUpdate(patchedUser, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsProfilePartialUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsProfileRetrieve(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsProfileRetrieve(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsProfileRetrieve']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {User} [user] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsProfileUpdate(user?: User, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsProfileUpdate(user, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsProfileUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Create a new user account
-         * @param {UserCreate} userCreate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsRegisterCreate(userCreate: UserCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCreate>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsRegisterCreate(userCreate, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsRegisterCreate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
-         * @param {TokenObtainPair} tokenObtainPair 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsTokenCreate(tokenObtainPair: TokenObtainPair, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenObtainPair>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsTokenCreate(tokenObtainPair, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsTokenCreate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
-         * @param {TokenRefresh} tokenRefresh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsTokenRefreshCreate(tokenRefresh: TokenRefresh, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenRefresh>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsTokenRefreshCreate(tokenRefresh, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsTokenRefreshCreate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
-         * @param {TokenVerify} tokenVerify 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiAccountsTokenVerifyCreate(tokenVerify: TokenVerify, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenVerify>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiAccountsTokenVerifyCreate(tokenVerify, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiAccountsTokenVerifyCreate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * API endpoint для чтения данных о районах
-         * @param {string} [name] 
-         * @param {string} [ordering] Which field to use when ordering the results.
-         * @param {number} [page] A page number within the paginated result set.
-         * @param {number} [pageSize] Number of results to return per page.
-         * @param {string} [search] A search term.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiLocationsDistrictsList(name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedDistrictList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsDistrictsList(name, ordering, page, pageSize, search, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiLocationsDistrictsList']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * API endpoint для чтения данных о районах
-         * @param {number} id A unique integer value identifying this Район.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiLocationsDistrictsRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<District>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsDistrictsRetrieve(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiLocationsDistrictsRetrieve']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * API endpoint для чтения данных о населенных пунктах
-         * @param {number} [district] 
-         * @param {string} [name] 
-         * @param {string} [ordering] Which field to use when ordering the results.
-         * @param {number} [page] A page number within the paginated result set.
-         * @param {number} [pageSize] Number of results to return per page.
-         * @param {string} [search] A search term.
-         * @param {ApiLocationsSettlementsListTypeEnum} [type] * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiLocationsSettlementsList(district?: number, name?: string, ordering?: string, page?: number, pageSize?: number, search?: string, type?: ApiLocationsSettlementsListTypeEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedSettlementList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsSettlementsList(district, name, ordering, page, pageSize, search, type, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiLocationsSettlementsList']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * API endpoint для чтения данных о населенных пунктах
-         * @param {number} id A unique integer value identifying this Населённый пункт.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiLocationsSettlementsRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Settlement>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiLocationsSettlementsRetrieve(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiLocationsSettlementsRetrieve']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} [ordering] Which field to use when ordering the results.
-         * @param {number} [page] A page number within the paginated result set.
-         * @param {number} [pageSize] Number of results to return per page.
-         * @param {string} [search] A search term.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiNewsList(ordering?: string, page?: number, pageSize?: number, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedNewsList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiNewsList(ordering, page, pageSize, search, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiNewsList']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} id A unique integer value identifying this Новость.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiNewsRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<News>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiNewsRetrieve(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiNewsRetrieve']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
+         * @param {RoutersListDifficultyEnum} [difficulty] Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
          * @param {number} [district] 
          * @param {string} [ordering] Which field to use when ordering the results.
          * @param {number} [page] A page number within the paginated result set.
@@ -1829,40 +2932,10 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPlacesList(district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedPlaceListList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesList(district, ordering, page, pageSize, search, settlement, options);
+        async routersList(difficulty?: RoutersListDifficultyEnum, district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedRouterListList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.routersList(difficulty, district, ordering, page, pageSize, search, settlement, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesList']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} id A unique integer value identifying this Интересное место.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPlacesRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlaceDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPlacesRetrieve(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiPlacesRetrieve']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {ApiRoutersListDifficultyEnum} [difficulty] Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
-         * @param {number} [district] 
-         * @param {string} [ordering] Which field to use when ordering the results.
-         * @param {number} [page] A page number within the paginated result set.
-         * @param {number} [pageSize] Number of results to return per page.
-         * @param {string} [search] A search term.
-         * @param {number} [settlement] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiRoutersList(difficulty?: ApiRoutersListDifficultyEnum, district?: number, ordering?: string, page?: number, pageSize?: number, search?: string, settlement?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedRouterListList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoutersList(difficulty, district, ordering, page, pageSize, search, settlement, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiRoutersList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RoutersApi.routersList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1871,984 +2944,177 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiRoutersRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RouterDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiRoutersRetrieve(id, options);
+        async routersRetrieve(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RouterDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.routersRetrieve(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.apiRoutersRetrieve']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RoutersApi.routersRetrieve']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * ApiApi - factory interface
+ * RoutersApi - factory interface
  * @export
  */
-export const ApiApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ApiApiFp(configuration)
+export const RoutersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoutersApiFp(configuration)
     return {
         /**
-         * Logout a user by blacklisting their refresh token
-         * @param {ApiApiApiAccountsLogoutCreateRequest} requestParameters Request parameters.
+         * 
+         * @param {RoutersApiRoutersListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsLogoutCreate(requestParameters: ApiApiApiAccountsLogoutCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiAccountsLogoutCreate(requestParameters.logout, options).then((request) => request(axios, basePath));
+        routersList(requestParameters: RoutersApiRoutersListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList> {
+            return localVarFp.routersList(requestParameters.difficulty, requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {ApiApiApiAccountsProfilePartialUpdateRequest} requestParameters Request parameters.
+         * @param {RoutersApiRoutersRetrieveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiAccountsProfilePartialUpdate(requestParameters: ApiApiApiAccountsProfilePartialUpdateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<User> {
-            return localVarFp.apiAccountsProfilePartialUpdate(requestParameters.patchedUser, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAccountsProfileRetrieve(options?: RawAxiosRequestConfig): AxiosPromise<User> {
-            return localVarFp.apiAccountsProfileRetrieve(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiAccountsProfileUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAccountsProfileUpdate(requestParameters: ApiApiApiAccountsProfileUpdateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<User> {
-            return localVarFp.apiAccountsProfileUpdate(requestParameters.user, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Create a new user account
-         * @param {ApiApiApiAccountsRegisterCreateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAccountsRegisterCreate(requestParameters: ApiApiApiAccountsRegisterCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserCreate> {
-            return localVarFp.apiAccountsRegisterCreate(requestParameters.userCreate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
-         * @param {ApiApiApiAccountsTokenCreateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAccountsTokenCreate(requestParameters: ApiApiApiAccountsTokenCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenObtainPair> {
-            return localVarFp.apiAccountsTokenCreate(requestParameters.tokenObtainPair, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
-         * @param {ApiApiApiAccountsTokenRefreshCreateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAccountsTokenRefreshCreate(requestParameters: ApiApiApiAccountsTokenRefreshCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenRefresh> {
-            return localVarFp.apiAccountsTokenRefreshCreate(requestParameters.tokenRefresh, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
-         * @param {ApiApiApiAccountsTokenVerifyCreateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiAccountsTokenVerifyCreate(requestParameters: ApiApiApiAccountsTokenVerifyCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenVerify> {
-            return localVarFp.apiAccountsTokenVerifyCreate(requestParameters.tokenVerify, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * API endpoint для чтения данных о районах
-         * @param {ApiApiApiLocationsDistrictsListRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiLocationsDistrictsList(requestParameters: ApiApiApiLocationsDistrictsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedDistrictList> {
-            return localVarFp.apiLocationsDistrictsList(requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * API endpoint для чтения данных о районах
-         * @param {ApiApiApiLocationsDistrictsRetrieveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiLocationsDistrictsRetrieve(requestParameters: ApiApiApiLocationsDistrictsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<District> {
-            return localVarFp.apiLocationsDistrictsRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * API endpoint для чтения данных о населенных пунктах
-         * @param {ApiApiApiLocationsSettlementsListRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiLocationsSettlementsList(requestParameters: ApiApiApiLocationsSettlementsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedSettlementList> {
-            return localVarFp.apiLocationsSettlementsList(requestParameters.district, requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.type, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * API endpoint для чтения данных о населенных пунктах
-         * @param {ApiApiApiLocationsSettlementsRetrieveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiLocationsSettlementsRetrieve(requestParameters: ApiApiApiLocationsSettlementsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<Settlement> {
-            return localVarFp.apiLocationsSettlementsRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiNewsListRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiNewsList(requestParameters: ApiApiApiNewsListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedNewsList> {
-            return localVarFp.apiNewsList(requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiNewsRetrieveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiNewsRetrieve(requestParameters: ApiApiApiNewsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<News> {
-            return localVarFp.apiNewsRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiPlacesListRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPlacesList(requestParameters: ApiApiApiPlacesListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList> {
-            return localVarFp.apiPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiPlacesRetrieveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPlacesRetrieve(requestParameters: ApiApiApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail> {
-            return localVarFp.apiPlacesRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiRoutersListRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiRoutersList(requestParameters: ApiApiApiRoutersListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList> {
-            return localVarFp.apiRoutersList(requestParameters.difficulty, requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ApiApiApiRoutersRetrieveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiRoutersRetrieve(requestParameters: ApiApiApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<RouterDetail> {
-            return localVarFp.apiRoutersRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
+        routersRetrieve(requestParameters: RoutersApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<RouterDetail> {
+            return localVarFp.routersRetrieve(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ApiApi - interface
+ * RoutersApi - interface
  * @export
- * @interface ApiApi
+ * @interface RoutersApi
  */
-export interface ApiApiInterface {
+export interface RoutersApiInterface {
     /**
-     * Logout a user by blacklisting their refresh token
-     * @param {ApiApiApiAccountsLogoutCreateRequest} requestParameters Request parameters.
+     * 
+     * @param {RoutersApiRoutersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApiApiInterface
+     * @memberof RoutersApiInterface
      */
-    apiAccountsLogoutCreate(requestParameters: ApiApiApiAccountsLogoutCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    routersList(requestParameters?: RoutersApiRoutersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList>;
 
     /**
      * 
-     * @param {ApiApiApiAccountsProfilePartialUpdateRequest} requestParameters Request parameters.
+     * @param {RoutersApiRoutersRetrieveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApiApiInterface
+     * @memberof RoutersApiInterface
      */
-    apiAccountsProfilePartialUpdate(requestParameters?: ApiApiApiAccountsProfilePartialUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<User>;
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiAccountsProfileRetrieve(options?: RawAxiosRequestConfig): AxiosPromise<User>;
-
-    /**
-     * 
-     * @param {ApiApiApiAccountsProfileUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiAccountsProfileUpdate(requestParameters?: ApiApiApiAccountsProfileUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<User>;
-
-    /**
-     * Create a new user account
-     * @param {ApiApiApiAccountsRegisterCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiAccountsRegisterCreate(requestParameters: ApiApiApiAccountsRegisterCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserCreate>;
-
-    /**
-     * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
-     * @param {ApiApiApiAccountsTokenCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiAccountsTokenCreate(requestParameters: ApiApiApiAccountsTokenCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenObtainPair>;
-
-    /**
-     * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
-     * @param {ApiApiApiAccountsTokenRefreshCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiAccountsTokenRefreshCreate(requestParameters: ApiApiApiAccountsTokenRefreshCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenRefresh>;
-
-    /**
-     * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
-     * @param {ApiApiApiAccountsTokenVerifyCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiAccountsTokenVerifyCreate(requestParameters: ApiApiApiAccountsTokenVerifyCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenVerify>;
-
-    /**
-     * API endpoint для чтения данных о районах
-     * @param {ApiApiApiLocationsDistrictsListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiLocationsDistrictsList(requestParameters?: ApiApiApiLocationsDistrictsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedDistrictList>;
-
-    /**
-     * API endpoint для чтения данных о районах
-     * @param {ApiApiApiLocationsDistrictsRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiLocationsDistrictsRetrieve(requestParameters: ApiApiApiLocationsDistrictsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<District>;
-
-    /**
-     * API endpoint для чтения данных о населенных пунктах
-     * @param {ApiApiApiLocationsSettlementsListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiLocationsSettlementsList(requestParameters?: ApiApiApiLocationsSettlementsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedSettlementList>;
-
-    /**
-     * API endpoint для чтения данных о населенных пунктах
-     * @param {ApiApiApiLocationsSettlementsRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiLocationsSettlementsRetrieve(requestParameters: ApiApiApiLocationsSettlementsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<Settlement>;
-
-    /**
-     * 
-     * @param {ApiApiApiNewsListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiNewsList(requestParameters?: ApiApiApiNewsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedNewsList>;
-
-    /**
-     * 
-     * @param {ApiApiApiNewsRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiNewsRetrieve(requestParameters: ApiApiApiNewsRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<News>;
-
-    /**
-     * 
-     * @param {ApiApiApiPlacesListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiPlacesList(requestParameters?: ApiApiApiPlacesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedPlaceListList>;
-
-    /**
-     * 
-     * @param {ApiApiApiPlacesRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiPlacesRetrieve(requestParameters: ApiApiApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlaceDetail>;
-
-    /**
-     * 
-     * @param {ApiApiApiRoutersListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiRoutersList(requestParameters?: ApiApiApiRoutersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedRouterListList>;
-
-    /**
-     * 
-     * @param {ApiApiApiRoutersRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApiInterface
-     */
-    apiRoutersRetrieve(requestParameters: ApiApiApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<RouterDetail>;
+    routersRetrieve(requestParameters: RoutersApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig): AxiosPromise<RouterDetail>;
 
 }
 
 /**
- * Request parameters for apiAccountsLogoutCreate operation in ApiApi.
+ * Request parameters for routersList operation in RoutersApi.
  * @export
- * @interface ApiApiApiAccountsLogoutCreateRequest
+ * @interface RoutersApiRoutersListRequest
  */
-export interface ApiApiApiAccountsLogoutCreateRequest {
-    /**
-     * 
-     * @type {Logout}
-     * @memberof ApiApiApiAccountsLogoutCreate
-     */
-    readonly logout: Logout
-}
-
-/**
- * Request parameters for apiAccountsProfilePartialUpdate operation in ApiApi.
- * @export
- * @interface ApiApiApiAccountsProfilePartialUpdateRequest
- */
-export interface ApiApiApiAccountsProfilePartialUpdateRequest {
-    /**
-     * 
-     * @type {PatchedUser}
-     * @memberof ApiApiApiAccountsProfilePartialUpdate
-     */
-    readonly patchedUser?: PatchedUser
-}
-
-/**
- * Request parameters for apiAccountsProfileUpdate operation in ApiApi.
- * @export
- * @interface ApiApiApiAccountsProfileUpdateRequest
- */
-export interface ApiApiApiAccountsProfileUpdateRequest {
-    /**
-     * 
-     * @type {User}
-     * @memberof ApiApiApiAccountsProfileUpdate
-     */
-    readonly user?: User
-}
-
-/**
- * Request parameters for apiAccountsRegisterCreate operation in ApiApi.
- * @export
- * @interface ApiApiApiAccountsRegisterCreateRequest
- */
-export interface ApiApiApiAccountsRegisterCreateRequest {
-    /**
-     * 
-     * @type {UserCreate}
-     * @memberof ApiApiApiAccountsRegisterCreate
-     */
-    readonly userCreate: UserCreate
-}
-
-/**
- * Request parameters for apiAccountsTokenCreate operation in ApiApi.
- * @export
- * @interface ApiApiApiAccountsTokenCreateRequest
- */
-export interface ApiApiApiAccountsTokenCreateRequest {
-    /**
-     * 
-     * @type {TokenObtainPair}
-     * @memberof ApiApiApiAccountsTokenCreate
-     */
-    readonly tokenObtainPair: TokenObtainPair
-}
-
-/**
- * Request parameters for apiAccountsTokenRefreshCreate operation in ApiApi.
- * @export
- * @interface ApiApiApiAccountsTokenRefreshCreateRequest
- */
-export interface ApiApiApiAccountsTokenRefreshCreateRequest {
-    /**
-     * 
-     * @type {TokenRefresh}
-     * @memberof ApiApiApiAccountsTokenRefreshCreate
-     */
-    readonly tokenRefresh: TokenRefresh
-}
-
-/**
- * Request parameters for apiAccountsTokenVerifyCreate operation in ApiApi.
- * @export
- * @interface ApiApiApiAccountsTokenVerifyCreateRequest
- */
-export interface ApiApiApiAccountsTokenVerifyCreateRequest {
-    /**
-     * 
-     * @type {TokenVerify}
-     * @memberof ApiApiApiAccountsTokenVerifyCreate
-     */
-    readonly tokenVerify: TokenVerify
-}
-
-/**
- * Request parameters for apiLocationsDistrictsList operation in ApiApi.
- * @export
- * @interface ApiApiApiLocationsDistrictsListRequest
- */
-export interface ApiApiApiLocationsDistrictsListRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiApiApiLocationsDistrictsList
-     */
-    readonly name?: string
-
-    /**
-     * Which field to use when ordering the results.
-     * @type {string}
-     * @memberof ApiApiApiLocationsDistrictsList
-     */
-    readonly ordering?: string
-
-    /**
-     * A page number within the paginated result set.
-     * @type {number}
-     * @memberof ApiApiApiLocationsDistrictsList
-     */
-    readonly page?: number
-
-    /**
-     * Number of results to return per page.
-     * @type {number}
-     * @memberof ApiApiApiLocationsDistrictsList
-     */
-    readonly pageSize?: number
-
-    /**
-     * A search term.
-     * @type {string}
-     * @memberof ApiApiApiLocationsDistrictsList
-     */
-    readonly search?: string
-}
-
-/**
- * Request parameters for apiLocationsDistrictsRetrieve operation in ApiApi.
- * @export
- * @interface ApiApiApiLocationsDistrictsRetrieveRequest
- */
-export interface ApiApiApiLocationsDistrictsRetrieveRequest {
-    /**
-     * A unique integer value identifying this Район.
-     * @type {number}
-     * @memberof ApiApiApiLocationsDistrictsRetrieve
-     */
-    readonly id: number
-}
-
-/**
- * Request parameters for apiLocationsSettlementsList operation in ApiApi.
- * @export
- * @interface ApiApiApiLocationsSettlementsListRequest
- */
-export interface ApiApiApiLocationsSettlementsListRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly district?: number
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly name?: string
-
-    /**
-     * Which field to use when ordering the results.
-     * @type {string}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly ordering?: string
-
-    /**
-     * A page number within the paginated result set.
-     * @type {number}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly page?: number
-
-    /**
-     * Number of results to return per page.
-     * @type {number}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly pageSize?: number
-
-    /**
-     * A search term.
-     * @type {string}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly search?: string
-
-    /**
-     * * &#x60;city&#x60; - Город * &#x60;town&#x60; - Посёлок городского типа * &#x60;village&#x60; - Село * &#x60;village_hamlet&#x60; - Деревня
-     * @type {'city' | 'town' | 'village' | 'village_hamlet'}
-     * @memberof ApiApiApiLocationsSettlementsList
-     */
-    readonly type?: ApiLocationsSettlementsListTypeEnum
-}
-
-/**
- * Request parameters for apiLocationsSettlementsRetrieve operation in ApiApi.
- * @export
- * @interface ApiApiApiLocationsSettlementsRetrieveRequest
- */
-export interface ApiApiApiLocationsSettlementsRetrieveRequest {
-    /**
-     * A unique integer value identifying this Населённый пункт.
-     * @type {number}
-     * @memberof ApiApiApiLocationsSettlementsRetrieve
-     */
-    readonly id: number
-}
-
-/**
- * Request parameters for apiNewsList operation in ApiApi.
- * @export
- * @interface ApiApiApiNewsListRequest
- */
-export interface ApiApiApiNewsListRequest {
-    /**
-     * Which field to use when ordering the results.
-     * @type {string}
-     * @memberof ApiApiApiNewsList
-     */
-    readonly ordering?: string
-
-    /**
-     * A page number within the paginated result set.
-     * @type {number}
-     * @memberof ApiApiApiNewsList
-     */
-    readonly page?: number
-
-    /**
-     * Number of results to return per page.
-     * @type {number}
-     * @memberof ApiApiApiNewsList
-     */
-    readonly pageSize?: number
-
-    /**
-     * A search term.
-     * @type {string}
-     * @memberof ApiApiApiNewsList
-     */
-    readonly search?: string
-}
-
-/**
- * Request parameters for apiNewsRetrieve operation in ApiApi.
- * @export
- * @interface ApiApiApiNewsRetrieveRequest
- */
-export interface ApiApiApiNewsRetrieveRequest {
-    /**
-     * A unique integer value identifying this Новость.
-     * @type {number}
-     * @memberof ApiApiApiNewsRetrieve
-     */
-    readonly id: number
-}
-
-/**
- * Request parameters for apiPlacesList operation in ApiApi.
- * @export
- * @interface ApiApiApiPlacesListRequest
- */
-export interface ApiApiApiPlacesListRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiApiApiPlacesList
-     */
-    readonly district?: number
-
-    /**
-     * Which field to use when ordering the results.
-     * @type {string}
-     * @memberof ApiApiApiPlacesList
-     */
-    readonly ordering?: string
-
-    /**
-     * A page number within the paginated result set.
-     * @type {number}
-     * @memberof ApiApiApiPlacesList
-     */
-    readonly page?: number
-
-    /**
-     * Number of results to return per page.
-     * @type {number}
-     * @memberof ApiApiApiPlacesList
-     */
-    readonly pageSize?: number
-
-    /**
-     * A search term.
-     * @type {string}
-     * @memberof ApiApiApiPlacesList
-     */
-    readonly search?: string
-
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiApiApiPlacesList
-     */
-    readonly settlement?: number
-}
-
-/**
- * Request parameters for apiPlacesRetrieve operation in ApiApi.
- * @export
- * @interface ApiApiApiPlacesRetrieveRequest
- */
-export interface ApiApiApiPlacesRetrieveRequest {
-    /**
-     * A unique integer value identifying this Интересное место.
-     * @type {number}
-     * @memberof ApiApiApiPlacesRetrieve
-     */
-    readonly id: number
-}
-
-/**
- * Request parameters for apiRoutersList operation in ApiApi.
- * @export
- * @interface ApiApiApiRoutersListRequest
- */
-export interface ApiApiApiRoutersListRequest {
+export interface RoutersApiRoutersListRequest {
     /**
      * Выберите уровень сложности маршрута  * &#x60;easy&#x60; - Легкий * &#x60;medium&#x60; - Средний * &#x60;hard&#x60; - Сложный
      * @type {'easy' | 'hard' | 'medium'}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
-    readonly difficulty?: ApiRoutersListDifficultyEnum
+    readonly difficulty?: RoutersListDifficultyEnum
 
     /**
      * 
      * @type {number}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
     readonly district?: number
 
     /**
      * Which field to use when ordering the results.
      * @type {string}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
     readonly ordering?: string
 
     /**
      * A page number within the paginated result set.
      * @type {number}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
     readonly page?: number
 
     /**
      * Number of results to return per page.
      * @type {number}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
     readonly pageSize?: number
 
     /**
      * A search term.
      * @type {string}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
     readonly search?: string
 
     /**
      * 
      * @type {number}
-     * @memberof ApiApiApiRoutersList
+     * @memberof RoutersApiRoutersList
      */
     readonly settlement?: number
 }
 
 /**
- * Request parameters for apiRoutersRetrieve operation in ApiApi.
+ * Request parameters for routersRetrieve operation in RoutersApi.
  * @export
- * @interface ApiApiApiRoutersRetrieveRequest
+ * @interface RoutersApiRoutersRetrieveRequest
  */
-export interface ApiApiApiRoutersRetrieveRequest {
+export interface RoutersApiRoutersRetrieveRequest {
     /**
      * A unique integer value identifying this Маршрут.
      * @type {number}
-     * @memberof ApiApiApiRoutersRetrieve
+     * @memberof RoutersApiRoutersRetrieve
      */
     readonly id: number
 }
 
 /**
- * ApiApi - object-oriented interface
+ * RoutersApi - object-oriented interface
  * @export
- * @class ApiApi
+ * @class RoutersApi
  * @extends {BaseAPI}
  */
-export class ApiApi extends BaseAPI implements ApiApiInterface {
+export class RoutersApi extends BaseAPI implements RoutersApiInterface {
     /**
-     * Logout a user by blacklisting their refresh token
-     * @param {ApiApiApiAccountsLogoutCreateRequest} requestParameters Request parameters.
+     * 
+     * @param {RoutersApiRoutersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApiApi
+     * @memberof RoutersApi
      */
-    public apiAccountsLogoutCreate(requestParameters: ApiApiApiAccountsLogoutCreateRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsLogoutCreate(requestParameters.logout, options).then((request) => request(this.axios, this.basePath));
+    public routersList(requestParameters: RoutersApiRoutersListRequest = {}, options?: RawAxiosRequestConfig) {
+        return RoutersApiFp(this.configuration).routersList(requestParameters.difficulty, requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {ApiApiApiAccountsProfilePartialUpdateRequest} requestParameters Request parameters.
+     * @param {RoutersApiRoutersRetrieveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApiApi
+     * @memberof RoutersApi
      */
-    public apiAccountsProfilePartialUpdate(requestParameters: ApiApiApiAccountsProfilePartialUpdateRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsProfilePartialUpdate(requestParameters.patchedUser, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiAccountsProfileRetrieve(options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsProfileRetrieve(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiAccountsProfileUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiAccountsProfileUpdate(requestParameters: ApiApiApiAccountsProfileUpdateRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsProfileUpdate(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Create a new user account
-     * @param {ApiApiApiAccountsRegisterCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiAccountsRegisterCreate(requestParameters: ApiApiApiAccountsRegisterCreateRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsRegisterCreate(requestParameters.userCreate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Takes a set of user credentials and returns an access and refresh JSON web token pair to prove the authentication of those credentials.
-     * @param {ApiApiApiAccountsTokenCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiAccountsTokenCreate(requestParameters: ApiApiApiAccountsTokenCreateRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsTokenCreate(requestParameters.tokenObtainPair, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
-     * @param {ApiApiApiAccountsTokenRefreshCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiAccountsTokenRefreshCreate(requestParameters: ApiApiApiAccountsTokenRefreshCreateRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsTokenRefreshCreate(requestParameters.tokenRefresh, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Takes a token and indicates if it is valid.  This view provides no information about a token\'s fitness for a particular use.
-     * @param {ApiApiApiAccountsTokenVerifyCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiAccountsTokenVerifyCreate(requestParameters: ApiApiApiAccountsTokenVerifyCreateRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiAccountsTokenVerifyCreate(requestParameters.tokenVerify, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * API endpoint для чтения данных о районах
-     * @param {ApiApiApiLocationsDistrictsListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiLocationsDistrictsList(requestParameters: ApiApiApiLocationsDistrictsListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiLocationsDistrictsList(requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * API endpoint для чтения данных о районах
-     * @param {ApiApiApiLocationsDistrictsRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiLocationsDistrictsRetrieve(requestParameters: ApiApiApiLocationsDistrictsRetrieveRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiLocationsDistrictsRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * API endpoint для чтения данных о населенных пунктах
-     * @param {ApiApiApiLocationsSettlementsListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiLocationsSettlementsList(requestParameters: ApiApiApiLocationsSettlementsListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiLocationsSettlementsList(requestParameters.district, requestParameters.name, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * API endpoint для чтения данных о населенных пунктах
-     * @param {ApiApiApiLocationsSettlementsRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiLocationsSettlementsRetrieve(requestParameters: ApiApiApiLocationsSettlementsRetrieveRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiLocationsSettlementsRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiNewsListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiNewsList(requestParameters: ApiApiApiNewsListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiNewsList(requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiNewsRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiNewsRetrieve(requestParameters: ApiApiApiNewsRetrieveRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiNewsRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiPlacesListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiPlacesList(requestParameters: ApiApiApiPlacesListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiPlacesList(requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiPlacesRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiPlacesRetrieve(requestParameters: ApiApiApiPlacesRetrieveRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiPlacesRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiRoutersListRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiRoutersList(requestParameters: ApiApiApiRoutersListRequest = {}, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiRoutersList(requestParameters.difficulty, requestParameters.district, requestParameters.ordering, requestParameters.page, requestParameters.pageSize, requestParameters.search, requestParameters.settlement, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ApiApiApiRoutersRetrieveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public apiRoutersRetrieve(requestParameters: ApiApiApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).apiRoutersRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public routersRetrieve(requestParameters: RoutersApiRoutersRetrieveRequest, options?: RawAxiosRequestConfig) {
+        return RoutersApiFp(this.configuration).routersRetrieve(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
 /**
  * @export
  */
-export const ApiLocationsSettlementsListTypeEnum = {
-    City: 'city',
-    Town: 'town',
-    Village: 'village',
-    VillageHamlet: 'village_hamlet'
-} as const;
-export type ApiLocationsSettlementsListTypeEnum = typeof ApiLocationsSettlementsListTypeEnum[keyof typeof ApiLocationsSettlementsListTypeEnum];
-/**
- * @export
- */
-export const ApiRoutersListDifficultyEnum = {
+export const RoutersListDifficultyEnum = {
     Easy: 'easy',
     Hard: 'hard',
     Medium: 'medium'
 } as const;
-export type ApiRoutersListDifficultyEnum = typeof ApiRoutersListDifficultyEnum[keyof typeof ApiRoutersListDifficultyEnum];
+export type RoutersListDifficultyEnum = typeof RoutersListDifficultyEnum[keyof typeof RoutersListDifficultyEnum];
 
 

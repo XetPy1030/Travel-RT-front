@@ -48,7 +48,7 @@ import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import Tag from 'primevue/tag'
 import type { RouterList } from '@/api/generated'
-import type { ApiRoutersListDifficultyEnum } from '@/api/generated'
+import type { RoutersListDifficultyEnum } from '@/api/generated'
 
 const props = defineProps<{
   router: RouterList
@@ -60,7 +60,7 @@ const locationName = computed(() => {
   return props.router.settlement_name || props.router.district_name || ''
 })
 
-const getDifficultyLabel = (difficulty: ApiRoutersListDifficultyEnum) => {
+const getDifficultyLabel = (difficulty: RoutersListDifficultyEnum) => {
   switch (difficulty) {
     case 'easy':
       return 'Легкий'
@@ -73,7 +73,7 @@ const getDifficultyLabel = (difficulty: ApiRoutersListDifficultyEnum) => {
   }
 }
 
-const getDifficultySeverity = (difficulty: ApiRoutersListDifficultyEnum) => {
+const getDifficultySeverity = (difficulty: RoutersListDifficultyEnum) => {
   switch (difficulty) {
     case 'easy':
       return 'success'
