@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import type { NewsRead } from "@/api/generated-moderation";
 import { formatDateRu } from "@/utils/date";
+import { getTopicLabel, getModerationStatusLabel } from "@moderation/constants";
 import Button from "primevue/button";
 
 defineProps<{ news: NewsRead | null }>();
@@ -41,13 +42,13 @@ function goBack() {
         </p>
         <h1 class="moderation-details__title">{{ news.parsed_title }}</h1>
         <p v-if="news.parsed_topic" class="moderation-details__topic">
-          Тема: {{ news.parsed_topic }}
+          Тема: {{ getTopicLabel(news.parsed_topic) }}
         </p>
         <p v-if="news.parsed_description" class="moderation-details__description">
           {{ news.parsed_description }}
         </p>
         <p v-if="news.moderation_status" class="moderation-details__status">
-          Статус: {{ news.moderation_status }}
+          Статус: {{ getModerationStatusLabel(news.moderation_status) }}
         </p>
         <p v-if="news.moderation_comment" class="moderation-details__comment">
           Комментарий модератора: {{ news.moderation_comment }}
