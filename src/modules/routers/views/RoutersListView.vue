@@ -56,13 +56,13 @@ import Message from 'primevue/message'
 import RoutersFilters from '../components/RoutersFilters.vue'
 import RouterCard from '../components/RouterCard.vue'
 import { useRouters } from '../composables/useRouters'
-import type { ApiRoutersListDifficultyEnum } from '@/api/generated'
+import type { RoutersListDifficultyEnum } from '@/api/generated'
 
 const { routers, loading, error, fetchRouters, totalPages, hasNextPage, hasPreviousPage } = useRouters()
 
 const currentPage = ref(1)
 const searchQuery = ref('')
-const filters = ref<{ regionId?: number; settlementId?: number; difficulty?: ApiRoutersListDifficultyEnum }>({
+const filters = ref<{ regionId?: number; settlementId?: number; difficulty?: RoutersListDifficultyEnum }>({
   regionId: undefined,
   settlementId: undefined,
   difficulty: undefined
@@ -81,7 +81,7 @@ onUnmounted(() => {
   if (searchTimeout) clearTimeout(searchTimeout)
 })
 
-const handleFilterChange = (newFilters: { regionId?: number; settlementId?: number; difficulty?: ApiRoutersListDifficultyEnum }) => {
+const handleFilterChange = (newFilters: { regionId?: number; settlementId?: number; difficulty?: RoutersListDifficultyEnum }) => {
   filters.value = newFilters
   currentPage.value = 1
   fetchRoutersList()

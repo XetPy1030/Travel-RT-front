@@ -1,8 +1,8 @@
 import { ref } from 'vue'
-import { $api } from '@/api'
 import type {PlaceDetail, PlaceList} from "@/api/generated"
 
 export const usePlaces = () => {
+  const { $api } = useNuxtApp()
   const places = ref<PlaceList[]>([])
   const currentPlace = ref<PlaceDetail | null>(null)
   const loading = ref(false)

@@ -1,8 +1,8 @@
 import { ref } from 'vue'
-import { $api } from '@/api'
 import type { District } from "@/api/generated"
 
 export const useDistricts = () => {
+  const { $api } = useNuxtApp()
   const districts = ref<District[]>([])
   const loading = ref(false)
   const error = ref<Error | null>(null)

@@ -1,8 +1,8 @@
 import { ref } from 'vue'
-import { $api } from '@/api'
-import type { RouterList, RouterDetail, ApiRoutersListDifficultyEnum } from "@/api/generated"
+import type { RouterList, RouterDetail, RoutersListDifficultyEnum } from "@/api/generated"
 
 export const useRouters = () => {
+  const { $api } = useNuxtApp()
   const routers = ref<RouterList[]>([])
   const currentRouter = ref<RouterDetail | null>(null)
   const loading = ref(false)
@@ -17,7 +17,7 @@ export const useRouters = () => {
     searchQuery?: string,
     regionId?: number,
     settlementId?: number,
-    difficulty?: ApiRoutersListDifficultyEnum
+    difficulty?: RoutersListDifficultyEnum
   ) => {
     try {
       loading.value = true

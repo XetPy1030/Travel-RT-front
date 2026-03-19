@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Travel API
- * API for Travel app
+ * API для приложения путешествий
  *
  * The version of the OpenAPI document: 1.0.0
  * 

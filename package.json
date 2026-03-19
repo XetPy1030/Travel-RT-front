@@ -4,16 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "start": "node .output/server/index.mjs",
+    "typecheck": "nuxt typecheck",
     "generate-api": "openapi-generator-cli generate -i http://localhost:8000/api/schema/ -g typescript-axios -o src/api/generated -c openapi-config.json",
-    "lint": "eslint --ext .ts,.tsx,.vue src",
-    "lint:fix": "eslint --ext .ts,.tsx,.vue src --fix"
+    "generate-api-moderation": "openapi-generator-cli generate -i http://localhost:9000/openapi.json -g typescript-axios -o src/api/generated-moderation -c openapi-config.json",
+    "lint": "eslint --ext .ts,.tsx,.vue src pages plugins app.vue nuxt.config.ts",
+    "lint:fix": "eslint --ext .ts,.tsx,.vue src pages plugins app.vue nuxt.config.ts --fix"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.11.2",
     "@primeuix/themes": "^1.0.3",
     "axios": "^1.8.4",
+    "nuxt": "^3.20.0",
     "pinia": "^3.0.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.3",

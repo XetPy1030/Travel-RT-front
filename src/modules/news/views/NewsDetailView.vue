@@ -4,11 +4,12 @@ import { useNewsStore } from '@stores/useNewsStores'
 import { onMounted, computed } from 'vue'
 import { processHtmlContent } from '@/utils/htmlUtils'
 import { formatDateRu } from '@/utils/date'
-import { MEDIA_BASE_URL } from '@/config'
+import { useAppRuntimeConfig } from '@/config'
 import BackButton from "@components/BackButton.vue";
 
 const route = useRoute()
 const newsStore = useNewsStore()
+const { mediaBaseUrl } = useAppRuntimeConfig()
 
 onMounted(async () => {
   await newsStore.fetchNewsById(Number(route.params.id))
@@ -16,7 +17,7 @@ onMounted(async () => {
 
 const processedContent = computed(() => {
   if (!newsStore.currentNews?.content) return ''
-  return processHtmlContent(newsStore.currentNews.content, MEDIA_BASE_URL)
+  return processHtmlContent(newsStore.currentNews.content, mediaBaseUrl)
 })
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <RouterLink
-      :to="{ name: 'news-detail', params: { id: news.id }}"
+      :to="`/news/${news.id}`"
       class="card-link"
   >
     <article ref="cardRef" class="card" :class="{ 'card--visible': isVisible }">

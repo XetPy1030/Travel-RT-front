@@ -75,21 +75,21 @@
 import { ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
-import { useSettlements } from '@composables/useSettlements.ts'
-import { useDistricts } from '@composables/useDistricts.ts'
-import type { District, Settlement, ApiRoutersListDifficultyEnum } from '@api/generated'
+import { useSettlements } from '@composables/useSettlements'
+import { useDistricts } from '@composables/useDistricts'
+import type { District, Settlement, RoutersListDifficultyEnum } from '@api/generated'
 
 const { settlements, loading: loadingSettlements, fetchSettlements } = useSettlements()
 const { districts: regions, loading: loadingRegions, fetchDistricts } = useDistricts()
 
 const selectedRegion = ref<District | null>(null)
 const selectedSettlement = ref<Settlement | null>(null)
-const selectedDifficulty = ref<ApiRoutersListDifficultyEnum | null>(null)
+const selectedDifficulty = ref<RoutersListDifficultyEnum | null>(null)
 
 const difficultyOptions = [
-  { label: 'Легкий', value: 'easy' as ApiRoutersListDifficultyEnum },
-  { label: 'Средний', value: 'medium' as ApiRoutersListDifficultyEnum },
-  { label: 'Сложный', value: 'hard' as ApiRoutersListDifficultyEnum }
+  { label: 'Легкий', value: 'easy' as RoutersListDifficultyEnum },
+  { label: 'Средний', value: 'medium' as RoutersListDifficultyEnum },
+  { label: 'Сложный', value: 'hard' as RoutersListDifficultyEnum }
 ]
 
 const emit = defineEmits(['filter-change'])

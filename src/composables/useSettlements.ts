@@ -1,8 +1,8 @@
 import { ref } from 'vue'
-import { $api } from '@/api'
 import type { Settlement } from "@/api/generated"
 
 export const useSettlements = () => {
+  const { $api } = useNuxtApp()
   const settlements = ref<Settlement[]>([])
   const loading = ref(false)
   const error = ref<Error | null>(null)
