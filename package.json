@@ -10,6 +10,7 @@
     "start": "node .output/server/index.mjs",
     "typecheck": "nuxt typecheck",
     "generate-api": "openapi-generator-cli generate -i http://localhost:8000/api/schema/ -g typescript-axios -o src/api/generated -c openapi-config.json",
+    "generate-api-moderation": "openapi-generator-cli generate -i http://localhost:9000/openapi.json -g typescript-axios -o src/api/generated-moderation -c openapi-config.json",
     "lint": "eslint --ext .ts,.tsx,.vue src pages plugins app.vue nuxt.config.ts",
     "lint:fix": "eslint --ext .ts,.tsx,.vue src pages plugins app.vue nuxt.config.ts --fix"
   },

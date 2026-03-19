@@ -16,7 +16,8 @@ export default defineNuxtConfig({
     apiBaseUrl: "",
     public: {
       apiBaseUrl: "",
-      mediaBaseUrl: ""
+      mediaBaseUrl: "",
+      moderationApiBaseUrl: ""
     }
   },
   alias: {
@@ -30,6 +31,7 @@ export default defineNuxtConfig({
     "@places": "/src/modules/places",
     "@routers": "/src/modules/routers",
     "@partners": "/src/modules/partners",
+    "@moderation": "/src/modules/moderation",
     "@stores": "/src/stores"
   },
   typescript: {
@@ -45,6 +47,7 @@ export default defineNuxtConfig({
           "@places/*": ["../src/modules/places/*"],
           "@routers/*": ["../src/modules/routers/*"],
           "@partners/*": ["../src/modules/partners/*"],
+          "@moderation/*": ["../src/modules/moderation/*"],
           "@stores/*": ["../src/stores/*"]
         }
       }
