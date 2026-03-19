@@ -15,7 +15,7 @@ const news = computed(() => {
     title: item.title,
     description: item.description,
     imageUrl: item.image || undefined,
-    date: item.created_at
+    date: item.published_at
   }))
 })
 
