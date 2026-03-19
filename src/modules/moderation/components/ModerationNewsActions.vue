@@ -50,13 +50,15 @@ function openRejectDialog() {
   rejectDialogVisible.value = true;
 }
 
-async function confirmReject() {
+const REJECT_REASON_OFF_TOPIC = "Не подходит тема";
+
+async function rejectWithReason(reason: string) {
   actionLoading.value = true;
   actionError.value = "";
   try {
     await moderation.rejectNewsModerationNewsNewsIdRejectPost({
       newsId: props.newsId,
-      reason: rejectReason.value.trim() || undefined,
+      reason: reason.trim() || undefined,
     });
     rejectDialogVisible.value = false;
     emit("done");
@@ -66,6 +68,10 @@ async function confirmReject() {
   } finally {
     actionLoading.value = false;
   }
+}
+
+async function confirmReject() {
+  await rejectWithReason(rejectReason.value);
 }
 </script>
 
@@ -80,6 +86,15 @@ async function confirmReject() {
         :loading="actionLoading"
         :disabled="actionLoading"
         @click="approve"
+      />
+      <Button
+        :label="REJECT_REASON_OFF_TOPIC"
+        icon="pi pi-ban"
+        severity="secondary"
+        outlined
+        :loading="actionLoading"
+        :disabled="actionLoading"
+        @click="rejectWithReason(REJECT_REASON_OFF_TOPIC)"
       />
       <Button
         label="Отклонить"

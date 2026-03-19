@@ -2,15 +2,24 @@
   <div class="routers-list">
     <div class="header">
       <h1>Маршруты</h1>
-      <div class="search-container">
-        <InputText
-            v-model="searchQuery"
-            placeholder="Поиск маршрутов..."
-            @input="onSearchInput"
-            class="search-input"
+      <div class="header-actions">
+        <Button
+          label="Сгенерировать маршрут"
+          icon="pi pi-sparkles"
+          @click="showGenerateDialog = true"
         />
+        <div class="search-container">
+          <InputText
+              v-model="searchQuery"
+              placeholder="Поиск маршрутов..."
+              @input="onSearchInput"
+              class="search-input"
+          />
+        </div>
       </div>
     </div>
+
+    <GenerateRouteDialog v-model="showGenerateDialog" />
 
     <RoutersFilters @filter-change="handleFilterChange" />
 
@@ -55,10 +64,12 @@ import ProgressSpinner from 'primevue/progressspinner'
 import Message from 'primevue/message'
 import RoutersFilters from '../components/RoutersFilters.vue'
 import RouterCard from '../components/RouterCard.vue'
+import GenerateRouteDialog from '../components/GenerateRouteDialog.vue'
 import { useRouters } from '../composables/useRouters'
 import type { RoutersListDifficultyEnum } from '@/api/generated'
 
 const { routers, loading, error, fetchRouters, totalPages, hasNextPage, hasPreviousPage } = useRouters()
+const showGenerateDialog = ref(false)
 
 const currentPage = ref(1)
 const searchQuery = ref('')
@@ -105,6 +116,13 @@ fetchRoutersList()
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 

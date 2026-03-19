@@ -20,8 +20,20 @@
         @change="handleRegionChange"
         :filter="true"
         filterPlaceholder="Поиск региона"
-        @filter="handleRegionFilter"
-      />
+        @filter="onRegionFilterInput"
+      >
+        <template #footer>
+          <Button
+            v-if="hasMoreRegions && !loadingRegions"
+            label="Загрузить ещё"
+            link
+            size="small"
+            :loading="loadingMoreRegions"
+            class="w-full"
+            @click="loadMoreRegions"
+          />
+        </template>
+      </Dropdown>
     </div>
 
     <div class="filter-group">
@@ -44,8 +56,20 @@
         @change="handleSettlementChange"
         :filter="true"
         filterPlaceholder="Поиск населенного пункта"
-        @filter="handleSettlementFilter"
-      />
+        @filter="onSettlementFilterInput"
+      >
+        <template #footer>
+          <Button
+            v-if="hasMoreSettlements && !loadingSettlements"
+            label="Загрузить ещё"
+            link
+            size="small"
+            :loading="loadingMoreSettlements"
+            class="w-full"
+            @click="loadMoreSettlements"
+          />
+        </template>
+      </Dropdown>
     </div>
 
     <div class="filter-group">
@@ -79,8 +103,39 @@ import { useSettlements } from '@composables/useSettlements'
 import { useDistricts } from '@composables/useDistricts'
 import type { District, Settlement, RoutersListDifficultyEnum } from '@api/generated'
 
-const { settlements, loading: loadingSettlements, fetchSettlements } = useSettlements()
-const { districts: regions, loading: loadingRegions, fetchDistricts } = useDistricts()
+const {
+  settlements,
+  loading: loadingSettlements,
+  loadingMore: loadingMoreSettlements,
+  hasMore: hasMoreSettlements,
+  fetchSettlements,
+  loadMore: loadMoreSettlements
+} = useSettlements()
+const {
+  districts: regions,
+  loading: loadingRegions,
+  loadingMore: loadingMoreRegions,
+  hasMore: hasMoreRegions,
+  fetchDistricts,
+  loadMore: loadMoreRegions
+} = useDistricts()
+
+let regionFilterTimer: ReturnType<typeof setTimeout> | null = null
+let settlementFilterTimer: ReturnType<typeof setTimeout> | null = null
+const onRegionFilterInput = (event: { value: string }) => {
+  if (regionFilterTimer) clearTimeout(regionFilterTimer)
+  regionFilterTimer = setTimeout(() => {
+    fetchDistricts(event.value || undefined)
+    regionFilterTimer = null
+  }, 300)
+}
+const onSettlementFilterInput = (event: { value: string }) => {
+  if (settlementFilterTimer) clearTimeout(settlementFilterTimer)
+  settlementFilterTimer = setTimeout(() => {
+    fetchSettlements(selectedRegion.value?.id, event.value || undefined)
+    settlementFilterTimer = null
+  }, 300)
+}
 
 const selectedRegion = ref<District | null>(null)
 const selectedSettlement = ref<Settlement | null>(null)
@@ -108,14 +163,6 @@ const clearSettlement = () => {
 const clearDifficulty = () => {
   selectedDifficulty.value = null
   emitFilterChange()
-}
-
-const handleRegionFilter = (event: { value: string }) => {
-  fetchDistricts(event.value)
-}
-
-const handleSettlementFilter = (event: { value: string }) => {
-  fetchSettlements(selectedRegion.value?.id, event.value)
 }
 
 const handleRegionChange = () => {
