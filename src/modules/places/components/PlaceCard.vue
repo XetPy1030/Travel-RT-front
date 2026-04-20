@@ -5,8 +5,6 @@
         :value="place.images"
         :numVisible="3"
         :circular="true"
-        :autoPlay="true"
-        :transitionInterval="3000"
         class="card__galleria"
     >
       <template #item="slotProps">

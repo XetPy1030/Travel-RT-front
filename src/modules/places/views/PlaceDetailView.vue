@@ -15,8 +15,6 @@
           :value="currentPlace.images" 
           :numVisible="5"
           :circular="true" 
-          :autoPlay="true" 
-          :transitionInterval="3000"
           :showThumbnails="true"
           :showIndicators="true"
         >
