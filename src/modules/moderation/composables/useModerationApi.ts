@@ -5,6 +5,19 @@ export function useModerationApi() {
     $moderationApi: { auth: unknown; moderation: unknown };
   };
 
+  const authRaw = $moderationApi.auth as {
+    loginTokenPost?: (params: { tokenRequest: { password: string } }) => Promise<unknown>;
+    loginApiModerationTokenPost?: (params: { tokenRequest: { password: string } }) => Promise<unknown>;
+  };
+
+  const auth = {
+    loginTokenPost: (params: { tokenRequest: { password: string } }) => {
+      if (authRaw.loginTokenPost) return authRaw.loginTokenPost(params);
+      if (authRaw.loginApiModerationTokenPost) return authRaw.loginApiModerationTokenPost(params);
+      throw new Error("Метод loginTokenPost недоступен в API клиенте");
+    },
+  };
+
   const moderationRaw = $moderationApi.moderation as unknown as {
     listPendingNewsApiModerationModerationPendingNewsGet?: (params?: { limit?: number }) => Promise<unknown>;
     getNewsApiModerationModerationNewsNewsIdGet?: (params: { newsId: number }) => Promise<unknown>;
@@ -47,7 +60,7 @@ export function useModerationApi() {
   };
 
   return {
-    auth: $moderationApi.auth,
+    auth,
     moderation,
   };
 }
