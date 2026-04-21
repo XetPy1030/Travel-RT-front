@@ -34,7 +34,7 @@ async function approve() {
   actionLoading.value = true;
   actionError.value = "";
   try {
-    await moderation.approveNewsModerationNewsNewsIdApprovePost({ newsId: props.newsId });
+    await moderation.approveNews({ newsId: props.newsId });
     emit("done");
     router.push("/moderation/news");
   } catch (e) {
@@ -56,7 +56,7 @@ async function rejectWithReason(reason: string) {
   actionLoading.value = true;
   actionError.value = "";
   try {
-    await moderation.rejectNewsModerationNewsNewsIdRejectPost({
+    await moderation.rejectNews({
       newsId: props.newsId,
       reason: reason.trim() || undefined,
     });

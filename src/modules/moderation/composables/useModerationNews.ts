@@ -1,6 +1,12 @@
 import { ref, computed } from "vue";
-import type { NewsRead } from "@/api/generated-moderation";
 import { useModerationApi } from "@moderation/composables/useModerationApi";
+
+type NewsRead = {
+  id: number;
+  parsed_title: string;
+  parsed_created_at: string;
+  external_source: string;
+};
 
 export function useModerationNews() {
   const { moderation } = useModerationApi();
@@ -16,7 +22,7 @@ export function useModerationNews() {
     loading.value = true;
     error.value = null;
     try {
-      const { data } = await moderation.listPendingNewsModerationPendingNewsGet({ limit });
+      const { data } = (await moderation.listPendingNews({ limit })) as { data: NewsRead[] };
       pendingList.value = Array.isArray(data) ? data : [];
     } catch (e) {
       error.value = e instanceof Error ? e.message : "Ошибка загрузки списка";
@@ -31,7 +37,7 @@ export function useModerationNews() {
     loadingDetail.value = true;
     error.value = null;
     try {
-      const { data } = await moderation.getNewsModerationNewsNewsIdGet({ newsId });
+      const { data } = (await moderation.getNews({ newsId })) as { data: NewsRead | null };
       currentDetail.value = data ?? null;
     } catch (e) {
       error.value = e instanceof Error ? e.message : "Ошибка загрузки новости";
@@ -45,13 +51,7 @@ export function useModerationNews() {
     approvingAll.value = true;
     error.value = null;
     try {
-      const moderationApi = moderation as unknown as {
-        approveAllPendingNewsModerationNewsApproveAllPost?: () => Promise<unknown>;
-      };
-      if (!moderationApi.approveAllPendingNewsModerationNewsApproveAllPost) {
-        throw new Error("Метод approve-all недоступен в API клиенте");
-      }
-      await moderationApi.approveAllPendingNewsModerationNewsApproveAllPost();
+      await moderation.approveAllPendingNews();
       pendingList.value = [];
     } catch (e) {
       error.value = e instanceof Error ? e.message : "Ошибка массового одобрения";
