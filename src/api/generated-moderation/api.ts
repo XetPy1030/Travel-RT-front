@@ -82,6 +82,32 @@ export const ModerationActionResultStatusEnum = {
 export type ModerationActionResultStatusEnum = typeof ModerationActionResultStatusEnum[keyof typeof ModerationActionResultStatusEnum];
 
 /**
+ * Ответ на массовое одобрение новостей в статусе «на модерации».
+ * @export
+ * @interface ModerationApproveAllResult
+ */
+export interface ModerationApproveAllResult {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModerationApproveAllResult
+     */
+    'status'?: ModerationApproveAllResultStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModerationApproveAllResult
+     */
+    'approved_count': number;
+}
+
+export const ModerationApproveAllResultStatusEnum = {
+    Ok: 'ok'
+} as const;
+
+export type ModerationApproveAllResultStatusEnum = typeof ModerationApproveAllResultStatusEnum[keyof typeof ModerationApproveAllResultStatusEnum];
+
+/**
  * Карточка новости для чтения (список и деталь).
  * @export
  * @interface NewsRead
@@ -159,6 +185,12 @@ export interface NewsRead {
      * @memberof NewsRead
      */
     'backend_id': number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NewsRead
+     */
+    'needs_backend_update': boolean;
 }
 /**
  * Тело запроса: пароль для входа.
@@ -238,10 +270,10 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginTokenPost: async (tokenRequest: TokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        loginApiModerationTokenPost: async (tokenRequest: TokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokenRequest' is not null or undefined
-            assertParamExists('loginTokenPost', 'tokenRequest', tokenRequest)
-            const localVarPath = `/token`;
+            assertParamExists('loginApiModerationTokenPost', 'tokenRequest', tokenRequest)
+            const localVarPath = `/api-moderation/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -284,10 +316,10 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginTokenPost(tokenRequest: TokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.loginTokenPost(tokenRequest, options);
+        async loginApiModerationTokenPost(tokenRequest: TokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.loginApiModerationTokenPost(tokenRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.loginTokenPost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.loginApiModerationTokenPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -303,12 +335,12 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
          * @summary Login
-         * @param {AuthApiLoginTokenPostRequest} requestParameters Request parameters.
+         * @param {AuthApiLoginApiModerationTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginTokenPost(requestParameters: AuthApiLoginTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
-            return localVarFp.loginTokenPost(requestParameters.tokenRequest, options).then((request) => request(axios, basePath));
+        loginApiModerationTokenPost(requestParameters: AuthApiLoginApiModerationTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
+            return localVarFp.loginApiModerationTokenPost(requestParameters.tokenRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -322,25 +354,25 @@ export interface AuthApiInterface {
     /**
      * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
      * @summary Login
-     * @param {AuthApiLoginTokenPostRequest} requestParameters Request parameters.
+     * @param {AuthApiLoginApiModerationTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApiInterface
      */
-    loginTokenPost(requestParameters: AuthApiLoginTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse>;
+    loginApiModerationTokenPost(requestParameters: AuthApiLoginApiModerationTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse>;
 
 }
 
 /**
- * Request parameters for loginTokenPost operation in AuthApi.
+ * Request parameters for loginApiModerationTokenPost operation in AuthApi.
  * @export
- * @interface AuthApiLoginTokenPostRequest
+ * @interface AuthApiLoginApiModerationTokenPostRequest
  */
-export interface AuthApiLoginTokenPostRequest {
+export interface AuthApiLoginApiModerationTokenPostRequest {
     /**
      * 
      * @type {TokenRequest}
-     * @memberof AuthApiLoginTokenPost
+     * @memberof AuthApiLoginApiModerationTokenPost
      */
     readonly tokenRequest: TokenRequest
 }
@@ -355,13 +387,13 @@ export class AuthApi extends BaseAPI implements AuthApiInterface {
     /**
      * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
      * @summary Login
-     * @param {AuthApiLoginTokenPostRequest} requestParameters Request parameters.
+     * @param {AuthApiLoginApiModerationTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public loginTokenPost(requestParameters: AuthApiLoginTokenPostRequest, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).loginTokenPost(requestParameters.tokenRequest, options).then((request) => request(this.axios, this.basePath));
+    public loginApiModerationTokenPost(requestParameters: AuthApiLoginApiModerationTokenPostRequest, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).loginApiModerationTokenPost(requestParameters.tokenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -374,16 +406,122 @@ export class AuthApi extends BaseAPI implements AuthApiInterface {
 export const ModerationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+         * @summary Approve All Pending News
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveAllPendingNewsApiModerationModerationNewsApproveAllPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-moderation/moderation/news/approve-all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication HTTPBearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+         * @summary Approve All Pending News
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-moderation/moderation/news/approve-all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication HTTPBearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Approve News
          * @param {number} newsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveNewsModerationNewsNewsIdApprovePost: async (newsId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        approveNewsApiModerationModerationNewsNewsIdApprovePost: async (newsId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'newsId' is not null or undefined
-            assertParamExists('approveNewsModerationNewsNewsIdApprovePost', 'newsId', newsId)
-            const localVarPath = `/moderation/news/{news_id}/approve`
+            assertParamExists('approveNewsApiModerationModerationNewsNewsIdApprovePost', 'newsId', newsId)
+            const localVarPath = `/api-moderation/moderation/news/{news_id}/approve`
+                .replace(`{${"news_id"}}`, encodeURIComponent(String(newsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication HTTPBearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Approve News
+         * @param {number} newsId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveNewsApiModerationModerationNewsNewsIdApprovePost_2: async (newsId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'newsId' is not null or undefined
+            assertParamExists('approveNewsApiModerationModerationNewsNewsIdApprovePost_2', 'newsId', newsId)
+            const localVarPath = `/api-moderation/moderation/news/{news_id}/approve`
                 .replace(`{${"news_id"}}`, encodeURIComponent(String(newsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -418,10 +556,10 @@ export const ModerationApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNewsModerationNewsNewsIdGet: async (newsId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getNewsApiModerationModerationNewsNewsIdGet: async (newsId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'newsId' is not null or undefined
-            assertParamExists('getNewsModerationNewsNewsIdGet', 'newsId', newsId)
-            const localVarPath = `/moderation/news/{news_id}`
+            assertParamExists('getNewsApiModerationModerationNewsNewsIdGet', 'newsId', newsId)
+            const localVarPath = `/api-moderation/moderation/news/{news_id}`
                 .replace(`{${"news_id"}}`, encodeURIComponent(String(newsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -451,13 +589,81 @@ export const ModerationApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Get News
+         * @param {number} newsId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNewsApiModerationModerationNewsNewsIdGet_3: async (newsId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'newsId' is not null or undefined
+            assertParamExists('getNewsApiModerationModerationNewsNewsIdGet_3', 'newsId', newsId)
+            const localVarPath = `/api-moderation/moderation/news/{news_id}`
+                .replace(`{${"news_id"}}`, encodeURIComponent(String(newsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication HTTPBearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Healthcheck
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        healthcheckApiModerationHealthGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-moderation/health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Pending News
          * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPendingNewsModerationPendingNewsGet: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/moderation/pending/news`;
+        listPendingNewsApiModerationModerationPendingNewsGet: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-moderation/moderation/pending/news`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -490,16 +696,134 @@ export const ModerationApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List Pending News
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPendingNewsApiModerationModerationPendingNewsGet_4: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-moderation/moderation/pending/news`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication HTTPBearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
+         * @summary Login
+         * @param {TokenRequest} tokenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        loginApiModerationTokenPost: async (tokenRequest: TokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tokenRequest' is not null or undefined
+            assertParamExists('loginApiModerationTokenPost', 'tokenRequest', tokenRequest)
+            const localVarPath = `/api-moderation/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tokenRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Reject News
          * @param {number} newsId 
          * @param {string | null} [reason] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectNewsModerationNewsNewsIdRejectPost: async (newsId: number, reason?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        rejectNewsApiModerationModerationNewsNewsIdRejectPost: async (newsId: number, reason?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'newsId' is not null or undefined
-            assertParamExists('rejectNewsModerationNewsNewsIdRejectPost', 'newsId', newsId)
-            const localVarPath = `/moderation/news/{news_id}/reject`
+            assertParamExists('rejectNewsApiModerationModerationNewsNewsIdRejectPost', 'newsId', newsId)
+            const localVarPath = `/api-moderation/moderation/news/{news_id}/reject`
+                .replace(`{${"news_id"}}`, encodeURIComponent(String(newsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication HTTPBearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (reason !== undefined) {
+                localVarQueryParameter['reason'] = reason;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Reject News
+         * @param {number} newsId 
+         * @param {string | null} [reason] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectNewsApiModerationModerationNewsNewsIdRejectPost_5: async (newsId: number, reason?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'newsId' is not null or undefined
+            assertParamExists('rejectNewsApiModerationModerationNewsNewsIdRejectPost_5', 'newsId', newsId)
+            const localVarPath = `/api-moderation/moderation/news/{news_id}/reject`
                 .replace(`{${"news_id"}}`, encodeURIComponent(String(newsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -542,16 +866,53 @@ export const ModerationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ModerationApiAxiosParamCreator(configuration)
     return {
         /**
+         * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+         * @summary Approve All Pending News
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationApproveAllResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.approveAllPendingNewsApiModerationModerationNewsApproveAllPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+         * @summary Approve All Pending News
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationApproveAllResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Approve News
          * @param {number} newsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async approveNewsModerationNewsNewsIdApprovePost(newsId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationActionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.approveNewsModerationNewsNewsIdApprovePost(newsId, options);
+        async approveNewsApiModerationModerationNewsNewsIdApprovePost(newsId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationActionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.approveNewsApiModerationModerationNewsNewsIdApprovePost(newsId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModerationApi.approveNewsModerationNewsNewsIdApprovePost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.approveNewsApiModerationModerationNewsNewsIdApprovePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Approve News
+         * @param {number} newsId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async approveNewsApiModerationModerationNewsNewsIdApprovePost_2(newsId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationActionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.approveNewsApiModerationModerationNewsNewsIdApprovePost_2(newsId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.approveNewsApiModerationModerationNewsNewsIdApprovePost_2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -561,10 +922,35 @@ export const ModerationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getNewsModerationNewsNewsIdGet(newsId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NewsRead>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getNewsModerationNewsNewsIdGet(newsId, options);
+        async getNewsApiModerationModerationNewsNewsIdGet(newsId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NewsRead>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNewsApiModerationModerationNewsNewsIdGet(newsId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModerationApi.getNewsModerationNewsNewsIdGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.getNewsApiModerationModerationNewsNewsIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get News
+         * @param {number} newsId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNewsApiModerationModerationNewsNewsIdGet_3(newsId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NewsRead>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNewsApiModerationModerationNewsNewsIdGet_3(newsId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.getNewsApiModerationModerationNewsNewsIdGet_3']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Healthcheck
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.healthcheckApiModerationHealthGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.healthcheckApiModerationHealthGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -574,10 +960,36 @@ export const ModerationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPendingNewsModerationPendingNewsGet(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NewsRead>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPendingNewsModerationPendingNewsGet(limit, options);
+        async listPendingNewsApiModerationModerationPendingNewsGet(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NewsRead>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPendingNewsApiModerationModerationPendingNewsGet(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModerationApi.listPendingNewsModerationPendingNewsGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.listPendingNewsApiModerationModerationPendingNewsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List Pending News
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPendingNewsApiModerationModerationPendingNewsGet_4(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NewsRead>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPendingNewsApiModerationModerationPendingNewsGet_4(limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.listPendingNewsApiModerationModerationPendingNewsGet_4']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
+         * @summary Login
+         * @param {TokenRequest} tokenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async loginApiModerationTokenPost(tokenRequest: TokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.loginApiModerationTokenPost(tokenRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.loginApiModerationTokenPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -588,10 +1000,24 @@ export const ModerationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rejectNewsModerationNewsNewsIdRejectPost(newsId: number, reason?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationActionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rejectNewsModerationNewsNewsIdRejectPost(newsId, reason, options);
+        async rejectNewsApiModerationModerationNewsNewsIdRejectPost(newsId: number, reason?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationActionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rejectNewsApiModerationModerationNewsNewsIdRejectPost(newsId, reason, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModerationApi.rejectNewsModerationNewsNewsIdRejectPost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.rejectNewsApiModerationModerationNewsNewsIdRejectPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Reject News
+         * @param {number} newsId 
+         * @param {string | null} [reason] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(newsId: number, reason?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModerationActionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(newsId, reason, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ModerationApi.rejectNewsApiModerationModerationNewsNewsIdRejectPost_5']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -605,44 +1031,121 @@ export const ModerationApiFactory = function (configuration?: Configuration, bas
     const localVarFp = ModerationApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Approve News
-         * @param {ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest} requestParameters Request parameters.
+         * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+         * @summary Approve All Pending News
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveNewsModerationNewsNewsIdApprovePost(requestParameters: ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult> {
-            return localVarFp.approveNewsModerationNewsNewsIdApprovePost(requestParameters.newsId, options).then((request) => request(axios, basePath));
+        approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options?: RawAxiosRequestConfig): AxiosPromise<ModerationApproveAllResult> {
+            return localVarFp.approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+         * @summary Approve All Pending News
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options?: RawAxiosRequestConfig): AxiosPromise<ModerationApproveAllResult> {
+            return localVarFp.approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Approve News
+         * @param {ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveNewsApiModerationModerationNewsNewsIdApprovePost(requestParameters: ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult> {
+            return localVarFp.approveNewsApiModerationModerationNewsNewsIdApprovePost(requestParameters.newsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Approve News
+         * @param {ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveNewsApiModerationModerationNewsNewsIdApprovePost_2(requestParameters: ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult> {
+            return localVarFp.approveNewsApiModerationModerationNewsNewsIdApprovePost_2(requestParameters.newsId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get News
-         * @param {ModerationApiGetNewsModerationNewsNewsIdGetRequest} requestParameters Request parameters.
+         * @param {ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNewsModerationNewsNewsIdGet(requestParameters: ModerationApiGetNewsModerationNewsNewsIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<NewsRead> {
-            return localVarFp.getNewsModerationNewsNewsIdGet(requestParameters.newsId, options).then((request) => request(axios, basePath));
+        getNewsApiModerationModerationNewsNewsIdGet(requestParameters: ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<NewsRead> {
+            return localVarFp.getNewsApiModerationModerationNewsNewsIdGet(requestParameters.newsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get News
+         * @param {ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNewsApiModerationModerationNewsNewsIdGet_3(requestParameters: ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<NewsRead> {
+            return localVarFp.getNewsApiModerationModerationNewsNewsIdGet_3(requestParameters.newsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Healthcheck
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig): AxiosPromise<HealthResponse> {
+            return localVarFp.healthcheckApiModerationHealthGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary List Pending News
-         * @param {ModerationApiListPendingNewsModerationPendingNewsGetRequest} requestParameters Request parameters.
+         * @param {ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPendingNewsModerationPendingNewsGet(requestParameters: ModerationApiListPendingNewsModerationPendingNewsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<NewsRead>> {
-            return localVarFp.listPendingNewsModerationPendingNewsGet(requestParameters.limit, options).then((request) => request(axios, basePath));
+        listPendingNewsApiModerationModerationPendingNewsGet(requestParameters: ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<NewsRead>> {
+            return localVarFp.listPendingNewsApiModerationModerationPendingNewsGet(requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Pending News
+         * @param {ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPendingNewsApiModerationModerationPendingNewsGet_4(requestParameters: ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<NewsRead>> {
+            return localVarFp.listPendingNewsApiModerationModerationPendingNewsGet_4(requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
+         * @summary Login
+         * @param {ModerationApiLoginApiModerationTokenPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        loginApiModerationTokenPost(requestParameters: ModerationApiLoginApiModerationTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
+            return localVarFp.loginApiModerationTokenPost(requestParameters.tokenRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Reject News
-         * @param {ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest} requestParameters Request parameters.
+         * @param {ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectNewsModerationNewsNewsIdRejectPost(requestParameters: ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult> {
-            return localVarFp.rejectNewsModerationNewsNewsIdRejectPost(requestParameters.newsId, requestParameters.reason, options).then((request) => request(axios, basePath));
+        rejectNewsApiModerationModerationNewsNewsIdRejectPost(requestParameters: ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult> {
+            return localVarFp.rejectNewsApiModerationModerationNewsNewsIdRejectPost(requestParameters.newsId, requestParameters.reason, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Reject News
+         * @param {ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(requestParameters: ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult> {
+            return localVarFp.rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(requestParameters.newsId, requestParameters.reason, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -654,106 +1157,260 @@ export const ModerationApiFactory = function (configuration?: Configuration, bas
  */
 export interface ModerationApiInterface {
     /**
-     * 
-     * @summary Approve News
-     * @param {ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest} requestParameters Request parameters.
+     * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+     * @summary Approve All Pending News
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApiInterface
      */
-    approveNewsModerationNewsNewsIdApprovePost(requestParameters: ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult>;
+    approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options?: RawAxiosRequestConfig): AxiosPromise<ModerationApproveAllResult>;
+
+    /**
+     * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+     * @summary Approve All Pending News
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options?: RawAxiosRequestConfig): AxiosPromise<ModerationApproveAllResult>;
+
+    /**
+     * 
+     * @summary Approve News
+     * @param {ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    approveNewsApiModerationModerationNewsNewsIdApprovePost(requestParameters: ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult>;
+
+    /**
+     * 
+     * @summary Approve News
+     * @param {ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    approveNewsApiModerationModerationNewsNewsIdApprovePost_2(requestParameters: ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult>;
 
     /**
      * 
      * @summary Get News
-     * @param {ModerationApiGetNewsModerationNewsNewsIdGetRequest} requestParameters Request parameters.
+     * @param {ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApiInterface
      */
-    getNewsModerationNewsNewsIdGet(requestParameters: ModerationApiGetNewsModerationNewsNewsIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<NewsRead>;
+    getNewsApiModerationModerationNewsNewsIdGet(requestParameters: ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<NewsRead>;
+
+    /**
+     * 
+     * @summary Get News
+     * @param {ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    getNewsApiModerationModerationNewsNewsIdGet_3(requestParameters: ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<NewsRead>;
+
+    /**
+     * 
+     * @summary Healthcheck
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig): AxiosPromise<HealthResponse>;
 
     /**
      * 
      * @summary List Pending News
-     * @param {ModerationApiListPendingNewsModerationPendingNewsGetRequest} requestParameters Request parameters.
+     * @param {ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApiInterface
      */
-    listPendingNewsModerationPendingNewsGet(requestParameters?: ModerationApiListPendingNewsModerationPendingNewsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<NewsRead>>;
+    listPendingNewsApiModerationModerationPendingNewsGet(requestParameters?: ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<NewsRead>>;
+
+    /**
+     * 
+     * @summary List Pending News
+     * @param {ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    listPendingNewsApiModerationModerationPendingNewsGet_4(requestParameters?: ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<Array<NewsRead>>;
+
+    /**
+     * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
+     * @summary Login
+     * @param {ModerationApiLoginApiModerationTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    loginApiModerationTokenPost(requestParameters: ModerationApiLoginApiModerationTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse>;
 
     /**
      * 
      * @summary Reject News
-     * @param {ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest} requestParameters Request parameters.
+     * @param {ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApiInterface
      */
-    rejectNewsModerationNewsNewsIdRejectPost(requestParameters: ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult>;
+    rejectNewsApiModerationModerationNewsNewsIdRejectPost(requestParameters: ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult>;
+
+    /**
+     * 
+     * @summary Reject News
+     * @param {ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApiInterface
+     */
+    rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(requestParameters: ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ModerationActionResult>;
 
 }
 
 /**
- * Request parameters for approveNewsModerationNewsNewsIdApprovePost operation in ModerationApi.
+ * Request parameters for approveNewsApiModerationModerationNewsNewsIdApprovePost operation in ModerationApi.
  * @export
- * @interface ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest
+ * @interface ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest
  */
-export interface ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest {
+export interface ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest {
     /**
      * 
      * @type {number}
-     * @memberof ModerationApiApproveNewsModerationNewsNewsIdApprovePost
+     * @memberof ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost
      */
     readonly newsId: number
 }
 
 /**
- * Request parameters for getNewsModerationNewsNewsIdGet operation in ModerationApi.
+ * Request parameters for approveNewsApiModerationModerationNewsNewsIdApprovePost_2 operation in ModerationApi.
  * @export
- * @interface ModerationApiGetNewsModerationNewsNewsIdGetRequest
+ * @interface ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request
  */
-export interface ModerationApiGetNewsModerationNewsNewsIdGetRequest {
+export interface ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request {
     /**
      * 
      * @type {number}
-     * @memberof ModerationApiGetNewsModerationNewsNewsIdGet
+     * @memberof ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0
      */
     readonly newsId: number
 }
 
 /**
- * Request parameters for listPendingNewsModerationPendingNewsGet operation in ModerationApi.
+ * Request parameters for getNewsApiModerationModerationNewsNewsIdGet operation in ModerationApi.
  * @export
- * @interface ModerationApiListPendingNewsModerationPendingNewsGetRequest
+ * @interface ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest
  */
-export interface ModerationApiListPendingNewsModerationPendingNewsGetRequest {
+export interface ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest {
     /**
      * 
      * @type {number}
-     * @memberof ModerationApiListPendingNewsModerationPendingNewsGet
+     * @memberof ModerationApiGetNewsApiModerationModerationNewsNewsIdGet
+     */
+    readonly newsId: number
+}
+
+/**
+ * Request parameters for getNewsApiModerationModerationNewsNewsIdGet_3 operation in ModerationApi.
+ * @export
+ * @interface ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request
+ */
+export interface ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0
+     */
+    readonly newsId: number
+}
+
+/**
+ * Request parameters for listPendingNewsApiModerationModerationPendingNewsGet operation in ModerationApi.
+ * @export
+ * @interface ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest
+ */
+export interface ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModerationApiListPendingNewsApiModerationModerationPendingNewsGet
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for rejectNewsModerationNewsNewsIdRejectPost operation in ModerationApi.
+ * Request parameters for listPendingNewsApiModerationModerationPendingNewsGet_4 operation in ModerationApi.
  * @export
- * @interface ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest
+ * @interface ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request
  */
-export interface ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest {
+export interface ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request {
     /**
      * 
      * @type {number}
-     * @memberof ModerationApiRejectNewsModerationNewsNewsIdRejectPost
+     * @memberof ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for loginApiModerationTokenPost operation in ModerationApi.
+ * @export
+ * @interface ModerationApiLoginApiModerationTokenPostRequest
+ */
+export interface ModerationApiLoginApiModerationTokenPostRequest {
+    /**
+     * 
+     * @type {TokenRequest}
+     * @memberof ModerationApiLoginApiModerationTokenPost
+     */
+    readonly tokenRequest: TokenRequest
+}
+
+/**
+ * Request parameters for rejectNewsApiModerationModerationNewsNewsIdRejectPost operation in ModerationApi.
+ * @export
+ * @interface ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest
+ */
+export interface ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost
      */
     readonly newsId: number
 
     /**
      * 
      * @type {string}
-     * @memberof ModerationApiRejectNewsModerationNewsNewsIdRejectPost
+     * @memberof ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost
+     */
+    readonly reason?: string | null
+}
+
+/**
+ * Request parameters for rejectNewsApiModerationModerationNewsNewsIdRejectPost_5 operation in ModerationApi.
+ * @export
+ * @interface ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request
+ */
+export interface ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0
+     */
+    readonly newsId: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0
      */
     readonly reason?: string | null
 }
@@ -766,51 +1423,144 @@ export interface ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest {
  */
 export class ModerationApi extends BaseAPI implements ModerationApiInterface {
     /**
-     * 
-     * @summary Approve News
-     * @param {ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest} requestParameters Request parameters.
+     * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+     * @summary Approve All Pending News
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApi
      */
-    public approveNewsModerationNewsNewsIdApprovePost(requestParameters: ModerationApiApproveNewsModerationNewsNewsIdApprovePostRequest, options?: RawAxiosRequestConfig) {
-        return ModerationApiFp(this.configuration).approveNewsModerationNewsNewsIdApprovePost(requestParameters.newsId, options).then((request) => request(this.axios, this.basePath));
+    public approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).approveAllPendingNewsApiModerationModerationNewsApproveAllPost(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Одобрить все новости со статусом «на модерации» (одним запросом к БД).
+     * @summary Approve All Pending News
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).approveAllPendingNewsApiModerationModerationNewsApproveAllPost_1(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Approve News
+     * @param {ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public approveNewsApiModerationModerationNewsNewsIdApprovePost(requestParameters: ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePostRequest, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).approveNewsApiModerationModerationNewsNewsIdApprovePost(requestParameters.newsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Approve News
+     * @param {ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public approveNewsApiModerationModerationNewsNewsIdApprovePost_2(requestParameters: ModerationApiApproveNewsApiModerationModerationNewsNewsIdApprovePost0Request, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).approveNewsApiModerationModerationNewsNewsIdApprovePost_2(requestParameters.newsId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Get News
-     * @param {ModerationApiGetNewsModerationNewsNewsIdGetRequest} requestParameters Request parameters.
+     * @param {ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApi
      */
-    public getNewsModerationNewsNewsIdGet(requestParameters: ModerationApiGetNewsModerationNewsNewsIdGetRequest, options?: RawAxiosRequestConfig) {
-        return ModerationApiFp(this.configuration).getNewsModerationNewsNewsIdGet(requestParameters.newsId, options).then((request) => request(this.axios, this.basePath));
+    public getNewsApiModerationModerationNewsNewsIdGet(requestParameters: ModerationApiGetNewsApiModerationModerationNewsNewsIdGetRequest, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).getNewsApiModerationModerationNewsNewsIdGet(requestParameters.newsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get News
+     * @param {ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public getNewsApiModerationModerationNewsNewsIdGet_3(requestParameters: ModerationApiGetNewsApiModerationModerationNewsNewsIdGet0Request, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).getNewsApiModerationModerationNewsNewsIdGet_3(requestParameters.newsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Healthcheck
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).healthcheckApiModerationHealthGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary List Pending News
-     * @param {ModerationApiListPendingNewsModerationPendingNewsGetRequest} requestParameters Request parameters.
+     * @param {ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApi
      */
-    public listPendingNewsModerationPendingNewsGet(requestParameters: ModerationApiListPendingNewsModerationPendingNewsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ModerationApiFp(this.configuration).listPendingNewsModerationPendingNewsGet(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public listPendingNewsApiModerationModerationPendingNewsGet(requestParameters: ModerationApiListPendingNewsApiModerationModerationPendingNewsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).listPendingNewsApiModerationModerationPendingNewsGet(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Pending News
+     * @param {ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public listPendingNewsApiModerationModerationPendingNewsGet_4(requestParameters: ModerationApiListPendingNewsApiModerationModerationPendingNewsGet0Request = {}, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).listPendingNewsApiModerationModerationPendingNewsGet_4(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Принимает пароль, возвращает JWT. Пароль задаётся в настройках (AUTH_PASSWORD).
+     * @summary Login
+     * @param {ModerationApiLoginApiModerationTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public loginApiModerationTokenPost(requestParameters: ModerationApiLoginApiModerationTokenPostRequest, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).loginApiModerationTokenPost(requestParameters.tokenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Reject News
-     * @param {ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest} requestParameters Request parameters.
+     * @param {ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModerationApi
      */
-    public rejectNewsModerationNewsNewsIdRejectPost(requestParameters: ModerationApiRejectNewsModerationNewsNewsIdRejectPostRequest, options?: RawAxiosRequestConfig) {
-        return ModerationApiFp(this.configuration).rejectNewsModerationNewsNewsIdRejectPost(requestParameters.newsId, requestParameters.reason, options).then((request) => request(this.axios, this.basePath));
+    public rejectNewsApiModerationModerationNewsNewsIdRejectPost(requestParameters: ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPostRequest, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).rejectNewsApiModerationModerationNewsNewsIdRejectPost(requestParameters.newsId, requestParameters.reason, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Reject News
+     * @param {ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(requestParameters: ModerationApiRejectNewsApiModerationModerationNewsNewsIdRejectPost0Request, options?: RawAxiosRequestConfig) {
+        return ModerationApiFp(this.configuration).rejectNewsApiModerationModerationNewsNewsIdRejectPost_5(requestParameters.newsId, requestParameters.reason, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -828,8 +1578,8 @@ export const SystemApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        healthcheckHealthGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/health`;
+        healthcheckApiModerationHealthGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-moderation/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -868,10 +1618,10 @@ export const SystemApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async healthcheckHealthGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.healthcheckHealthGet(options);
+        async healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.healthcheckApiModerationHealthGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SystemApi.healthcheckHealthGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SystemApi.healthcheckApiModerationHealthGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -890,8 +1640,8 @@ export const SystemApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        healthcheckHealthGet(options?: RawAxiosRequestConfig): AxiosPromise<HealthResponse> {
-            return localVarFp.healthcheckHealthGet(options).then((request) => request(axios, basePath));
+        healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig): AxiosPromise<HealthResponse> {
+            return localVarFp.healthcheckApiModerationHealthGet(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -909,7 +1659,7 @@ export interface SystemApiInterface {
      * @throws {RequiredError}
      * @memberof SystemApiInterface
      */
-    healthcheckHealthGet(options?: RawAxiosRequestConfig): AxiosPromise<HealthResponse>;
+    healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig): AxiosPromise<HealthResponse>;
 
 }
 
@@ -927,8 +1677,8 @@ export class SystemApi extends BaseAPI implements SystemApiInterface {
      * @throws {RequiredError}
      * @memberof SystemApi
      */
-    public healthcheckHealthGet(options?: RawAxiosRequestConfig) {
-        return SystemApiFp(this.configuration).healthcheckHealthGet(options).then((request) => request(this.axios, this.basePath));
+    public healthcheckApiModerationHealthGet(options?: RawAxiosRequestConfig) {
+        return SystemApiFp(this.configuration).healthcheckApiModerationHealthGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

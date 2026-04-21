@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 import { useModerationNews } from "@moderation/composables/useModerationNews";
 import ModerationNewsList from "@moderation/components/ModerationNewsList.vue";
 import ProgressSpinner from "primevue/progressspinner";
+import Button from "primevue/button";
 
 useHead({ title: "Модерация | Ожидающие новости" });
 
@@ -12,7 +13,9 @@ const {
   pendingList,
   loading,
   error,
+  approvingAll,
   fetchPendingList,
+  approveAllPending,
 } = useModerationNews();
 
 onMounted(() => {
@@ -22,7 +25,18 @@ onMounted(() => {
 
 <template>
   <div class="moderation-news-page">
-    <h2 class="moderation-news-page__title">Ожидающие модерации</h2>
+    <div class="moderation-news-page__header">
+      <h2 class="moderation-news-page__title">Ожидающие модерации</h2>
+      <Button
+        v-if="pendingList.length"
+        label="Принять все"
+        icon="pi pi-check"
+        severity="success"
+        :loading="approvingAll"
+        :disabled="loading || approvingAll"
+        @click="approveAllPending"
+      />
+    </div>
     <div v-if="loading" class="moderation-news-page__loading">
       <ProgressSpinner />
     </div>
@@ -39,10 +53,17 @@ onMounted(() => {
 
 <style scoped>
 .moderation-news-page__title {
-  margin: 0 0 1.5rem;
+  margin: 0;
   font-size: 1.35rem;
   font-weight: 600;
   color: var(--text-color);
+}
+.moderation-news-page__header {
+  margin: 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 .moderation-news-page__loading,
 .moderation-news-page__empty {

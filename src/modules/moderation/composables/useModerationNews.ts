@@ -9,6 +9,7 @@ export function useModerationNews() {
   const currentDetail = ref<NewsRead | null>(null);
   const loading = ref(false);
   const loadingDetail = ref(false);
+  const approvingAll = ref(false);
   const error = ref<string | null>(null);
 
   async function fetchPendingList(limit?: number) {
@@ -40,6 +41,25 @@ export function useModerationNews() {
     }
   }
 
+  async function approveAllPending() {
+    approvingAll.value = true;
+    error.value = null;
+    try {
+      const moderationApi = moderation as unknown as {
+        approveAllPendingNewsModerationNewsApproveAllPost?: () => Promise<unknown>;
+      };
+      if (!moderationApi.approveAllPendingNewsModerationNewsApproveAllPost) {
+        throw new Error("Метод approve-all недоступен в API клиенте");
+      }
+      await moderationApi.approveAllPendingNewsModerationNewsApproveAllPost();
+      pendingList.value = [];
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : "Ошибка массового одобрения";
+    } finally {
+      approvingAll.value = false;
+    }
+  }
+
   function removeFromPending(id: number) {
     pendingList.value = pendingList.value.filter((item) => item.id !== id);
   }
@@ -51,9 +71,11 @@ export function useModerationNews() {
     currentDetail,
     loading,
     loadingDetail,
+    approvingAll,
     error,
     fetchPendingList,
     fetchNewsDetail,
+    approveAllPending,
     removeFromPending,
     hasPending,
   };
